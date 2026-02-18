@@ -13,11 +13,10 @@ export default function Home() {
           Recipe Lab
         </p>
         <h1 className="mb-3 text-4xl font-semibold leading-tight tracking-tight text-stone-900 md:text-5xl">
-          A clean home for recipes you want to cook again.
+          My kitchen-tested recipes, written the way I actually cook.
         </h1>
         <p className="max-w-2xl text-sm leading-7 text-stone-700 md:text-base">
-          Search quickly, browse by tags, and keep your personal cookbook lightweight and easy to
-          maintain.
+          Clear measurements, mise-en-place steps, and instructions written for someone who isn’t a chef but is good at following directions.
         </p>
         <div className="mt-5 flex flex-wrap gap-3">
           <Link
