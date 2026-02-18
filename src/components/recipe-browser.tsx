@@ -13,7 +13,12 @@ interface RecipeBrowserProps {
 }
 
 function matchesQuery(recipe: RecipeSummary, query: string): boolean {
-  const haystack = [recipe.title, recipe.description, ...recipe.tags, ...recipe.ingredients]
+  const ingredientTerms = recipe.ingredients.flatMap((ingredient) => [
+    ingredient.name,
+    ingredient.amount?.unit ?? "",
+    ingredient.grams ? `${ingredient.grams}` : "",
+  ]);
+  const haystack = [recipe.title, recipe.description, ...recipe.tags, ...ingredientTerms]
     .join(" ")
     .toLowerCase();
 

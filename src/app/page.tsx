@@ -16,7 +16,7 @@ export default function Home() {
           A clean home for recipes you want to cook again.
         </h1>
         <p className="max-w-2xl text-sm leading-7 text-stone-700 md:text-base">
-          Save favorites, search quickly, and keep your personal cookbook lightweight and easy to
+          Search quickly, browse by tags, and keep your personal cookbook lightweight and easy to
           maintain.
         </p>
         <div className="mt-5 flex flex-wrap gap-3">

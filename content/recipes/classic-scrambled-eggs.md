@@ -11,17 +11,39 @@ cookMinutes: 5
 totalMinutes: 7
 servings: 2
 ingredients:
-  - 4 large eggs
-  - 1 tbsp unsalted butter
-  - 1 pinch kosher salt
-  - 1 pinch black pepper
+  - name: large eggs
+    amount:
+      value: 4
+      unit: whole
+    grams: 200
+  - name: unsalted butter
+    amount:
+      value: 1
+      unit: tbsp
+    grams: 14
+  - name: kosher salt
+    amount:
+      value: 1
+      unit: pinch
+    grams: 1
+  - name: black pepper
+    amount:
+      value: 1
+      unit: pinch
+    grams: 1
 ---
 
+## Prep (Mise-en-Place)
+
 1. Crack the eggs into a bowl and whisk until fully combined.
-2. Melt butter in a nonstick skillet over low heat.
-3. Add eggs and stir constantly with a silicone spatula until softly set.
-4. Remove from heat just before fully cooked; residual heat will finish them.
-5. Season with salt and pepper, then serve immediately.
+2. Measure butter, salt, and pepper.
+
+## Execution
+
+1. Melt butter in a nonstick skillet over low heat.
+2. Add eggs and stir constantly with a silicone spatula until softly set.
+3. Remove from heat just before fully cooked; residual heat will finish them.
+4. Season with salt and pepper, then serve immediately.
 
 Notes:
 - Keep heat low for a creamier texture.

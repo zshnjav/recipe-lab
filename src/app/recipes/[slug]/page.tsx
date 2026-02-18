@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
+import { RecipeIngredientsPanel } from "@/components/recipe-ingredients-panel";
 import { RecipeMethod } from "@/components/recipe-method";
 import { getAllRecipes, getRecipeBySlug, getRecipeSlugs } from "@/lib/recipes";
 
@@ -72,15 +73,10 @@ export default async function RecipePage({ params }: RecipePageProps) {
             </div>
             <div className="flex justify-between gap-4">
               <dt>Servings</dt>
-              <dd>{recipe.servings}</dd>
+              <dd>{recipe.servings} base</dd>
             </div>
           </dl>
-          <h2 className="mt-6 text-lg font-semibold text-stone-900">Ingredients</h2>
-          <ul className="mt-2 list-disc space-y-1.5 pl-5 text-sm text-stone-700">
-            {recipe.ingredients.map((ingredient) => (
-              <li key={ingredient}>{ingredient}</li>
-            ))}
-          </ul>
+          <RecipeIngredientsPanel ingredients={recipe.ingredients} baseServings={recipe.servings} />
           <ul className="mt-5 flex flex-wrap gap-2">
             {recipe.tags.map((tag) => (
               <li key={tag}>

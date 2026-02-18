@@ -1,3 +1,14 @@
+export interface RecipeIngredientAmount {
+  value: number;
+  unit: string;
+}
+
+export interface RecipeIngredient {
+  name: string;
+  amount?: RecipeIngredientAmount;
+  grams?: number;
+}
+
 export interface RecipeFrontmatter {
   title: string;
   date: string;
@@ -7,7 +18,7 @@ export interface RecipeFrontmatter {
   cookMinutes: number;
   totalMinutes: number;
   servings: number;
-  ingredients: string[];
+  ingredients: RecipeIngredient[];
 }
 
 export interface RecipeSummary extends RecipeFrontmatter {
