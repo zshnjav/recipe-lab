@@ -170,14 +170,20 @@ function validateIngredients(input: unknown): RecipeIngredient[] {
 }
 
 function validateFrontmatter(frontmatter: Record<string, unknown>): RecipeFrontmatter {
+  const totalMinutes = toNumber(frontmatter.totalMinutes, "totalMinutes");
+  const tags = new Set(toStringArray(frontmatter.tags, "tags"));
+  if (totalMinutes <= 30) {
+    tags.add("quick");
+  }
+
   return {
     title: toString(frontmatter.title, "title"),
     date: toDateString(frontmatter.date, "date"),
     description: toString(frontmatter.description, "description"),
-    tags: toStringArray(frontmatter.tags, "tags"),
+    tags: [...tags],
     prepMinutes: toNumber(frontmatter.prepMinutes, "prepMinutes"),
     cookMinutes: toNumber(frontmatter.cookMinutes, "cookMinutes"),
-    totalMinutes: toNumber(frontmatter.totalMinutes, "totalMinutes"),
+    totalMinutes,
     servings: toNumber(frontmatter.servings, "servings"),
     ingredients: validateIngredients(frontmatter.ingredients),
   };
