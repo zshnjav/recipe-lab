@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import type { RecipeSummary } from "@/types/recipe";
@@ -10,6 +11,10 @@ interface RecipeBrowserProps {
   tags: string[];
   initialCount?: number;
   showRandomButton?: boolean;
+  featuredTagCount?: number;
+  showBrowseTagsPill?: boolean;
+  browseTagsHref?: string;
+  showAllTag?: boolean;
 }
 
 function matchesQuery(recipe: RecipeSummary, query: string): boolean {
@@ -25,11 +30,25 @@ function matchesQuery(recipe: RecipeSummary, query: string): boolean {
   return haystack.includes(query.toLowerCase());
 }
 
+function pickRandomTags(tags: string[], count: number): string[] {
+  const shuffled = [...tags];
+  for (let index = shuffled.length - 1; index > 0; index -= 1) {
+    const randomIndex = Math.floor(Math.random() * (index + 1));
+    [shuffled[index], shuffled[randomIndex]] = [shuffled[randomIndex], shuffled[index]];
+  }
+
+  return shuffled.slice(0, count);
+}
+
 export function RecipeBrowser({
   recipes,
   tags,
   initialCount,
   showRandomButton = false,
+  featuredTagCount,
+  showBrowseTagsPill = false,
+  browseTagsHref = "/tags",
+  showAllTag = true,
 }: RecipeBrowserProps) {
   const router = useRouter();
   const [query, setQuery] = useState("");
@@ -44,6 +63,12 @@ export function RecipeBrowser({
   }, [recipes, query, activeTag]);
 
   const visible = initialCount ? filtered.slice(0, initialCount) : filtered;
+  const visibleTags = useMemo(() => {
+    if (!featuredTagCount || tags.length <= featuredTagCount) {
+      return tags;
+    }
+    return pickRandomTags(tags, featuredTagCount);
+  }, [tags, featuredTagCount]);
 
   const openRandomRecipe = () => {
     if (filtered.length === 0) {
@@ -69,7 +94,7 @@ export function RecipeBrowser({
             <button
               type="button"
               onClick={openRandomRecipe}
-              className="inline-flex shrink-0 items-center justify-center rounded-xl bg-amber-600 px-4 py-3 text-sm font-semibold text-white hover:bg-amber-700"
+              className="inline-flex shrink-0 items-center justify-center rounded-xl border border-amber-300 bg-amber-100 px-4 py-3 text-sm font-semibold text-amber-900 hover:bg-amber-200"
               disabled={filtered.length === 0}
             >
               Random recipe
@@ -77,20 +102,22 @@ export function RecipeBrowser({
           ) : null}
         </div>
         <ul className="mt-4 flex flex-wrap gap-2">
-          <li>
-            <button
-              type="button"
-              onClick={() => setActiveTag("all")}
-              className={`rounded-full px-3 py-1.5 text-xs font-medium ${
-                activeTag === "all"
-                  ? "bg-stone-900 text-white"
-                  : "border border-stone-300 bg-white text-stone-700 hover:bg-stone-100"
-              }`}
-            >
-              All
-            </button>
-          </li>
-          {tags.map((tag) => (
+          {showAllTag ? (
+            <li>
+              <button
+                type="button"
+                onClick={() => setActiveTag("all")}
+                className={`rounded-full px-3 py-1.5 text-xs font-medium ${
+                  activeTag === "all"
+                    ? "bg-stone-900 text-white"
+                    : "border border-stone-300 bg-white text-stone-700 hover:bg-stone-100"
+                }`}
+              >
+                All
+              </button>
+            </li>
+          ) : null}
+          {visibleTags.map((tag) => (
             <li key={tag}>
               <button
                 type="button"
@@ -105,6 +132,16 @@ export function RecipeBrowser({
               </button>
             </li>
           ))}
+          {showBrowseTagsPill ? (
+            <li>
+              <Link
+                href={browseTagsHref}
+                className="inline-flex rounded-full border border-stone-300 bg-white px-3 py-1.5 text-xs font-medium text-stone-700 hover:bg-stone-100"
+              >
+                Browse by tags
+              </Link>
+            </li>
+          ) : null}
         </ul>
       </div>
 
