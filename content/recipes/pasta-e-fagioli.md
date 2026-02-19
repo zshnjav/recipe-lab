@@ -4,9 +4,9 @@ date: 2026-01-15
 description: "Hearty, creamy-bodied, classic Italian-American comfort soup with white beans, beef, pasta, and tomato broth."
 tags:
   - "soup"
-  -"pasta"
-  -"beef"
-  -"beans"
+  - "pasta"
+  - "beef"
+  - "beans"
 prepMinutes: 20
 cookMinutes: 35
 totalMinutes: 55
