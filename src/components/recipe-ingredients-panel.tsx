@@ -175,20 +175,6 @@ export function RecipeIngredientsPanel({ ingredients, baseServings }: RecipeIngr
           >
             Copy shopping list
           </button>
-          <button
-            type="button"
-            onClick={() => setSelected(new Set(ingredients.map((_, index) => index)))}
-            className="rounded-lg border border-stone-300 bg-white px-3 py-2 text-xs font-semibold text-stone-700 hover:bg-stone-100"
-          >
-            Select all
-          </button>
-          <button
-            type="button"
-            onClick={() => setSelected(new Set<number>())}
-            className="rounded-lg border border-stone-300 bg-white px-3 py-2 text-xs font-semibold text-stone-700 hover:bg-stone-100"
-          >
-            Clear
-          </button>
           {copyStatus ? <span className="text-xs text-stone-600">{copyStatus}</span> : null}
         </div>
       </div>

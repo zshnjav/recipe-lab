@@ -3,7 +3,10 @@ title: "Gyudon (Japanese Beef Bowl)"
 date: 2026-02-18
 description: "A classic sweet and savory Japanese comfort dish featuring thinly sliced beef and onions simmered in a dashi-mirin broth."
 tags:
-  - "Japanese"
+  - "beef"
+  - "japanese"
+  - "rice"
+  - "onion"
 prepMinutes: 15
 cookMinutes: 15
 totalMinutes: 30
@@ -62,22 +65,17 @@ ingredients:
   - name: "Egg"
     amount:
       value: 4
-      unit: ""
-    grams: 0
-  - name: "Shichimi Togarashi"
-    amount:
-      value: 0
-      unit: "to taste"
+      unit: "whole"
     grams: 0
 ---
 
 ## Prep (Mise-en-Place)
 
-1. In a small cup or bowl, mix 1 cup (240 ml) of water with ¾ tsp (3 g) of Hondashi until dissolved. Set aside.
+1. In a small cup or bowl, mix 1 cup (240 ml) of water with 3/4 tsp (3 g) of Hondashi until dissolved. Set aside.
 2. If the 1 lb (454 g) beef slices are very long, cut them in half crosswise so they are bite-sized.
-3. Peel 2 medium (300 g) onions and slice them thinly (approx. ¼ inch thick).
+3. Peel 2 medium (300 g) onions and slice them thinly (approx. 1/4 inch thick).
 4. Peel 1-inch knob (15 g) ginger and grate it finely.
-5. In your cold skillet or wide sauté pan, combine the prepared Dashi Stock, ½ cup (120 ml) Mizkan Mirin, and ¼ cup (60 ml) Soy Sauce.
+5. In your cold skillet or wide saute pan, combine the prepared Dashi Stock, 1/2 cup (120 ml) Mizkan Mirin, and 1/4 cup (60 ml) Soy Sauce.
 
 ## Execution
 
@@ -87,7 +85,7 @@ ingredients:
 4. Add the 1 lb (454 g) sliced beef to the simmering liquid. Use chopsticks to separate the slices immediately. Simmer gently for 2 to 3 minutes. As soon as the beef is no longer pink, turn off the heat.
 5. Spoon the beef, onions, and sauce over the 4 cups (600 g) of rice. Top with scallions, pickled ginger, or an egg.
 
-![Recipe image alt text](/recipes/your-slug/step-1.jpg)
+![Gyudon bowl](/recipes/gyudon-beef-bowl/step-1.jpg)
 
 Notes:
 - Since we are swapping sake for sweet Mirin, we are omitting the extra sugar entirely.

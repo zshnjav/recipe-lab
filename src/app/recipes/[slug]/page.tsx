@@ -53,7 +53,7 @@ export default async function RecipePage({ params }: RecipePageProps) {
       <Link href="/recipes" className="text-sm font-medium text-amber-800 hover:text-amber-900">
         Back to all recipes
       </Link>
-      <article className="mt-4 grid gap-8 lg:grid-cols-[280px_1fr]">
+      <article className="mt-4 grid gap-8 lg:grid-cols-[420px_1fr]">
         <aside className="h-fit rounded-2xl border border-stone-200 bg-white p-5 shadow-sm">
           <h1 className="text-3xl font-semibold tracking-tight text-stone-900">{recipe.title}</h1>
           <p className="mt-2 text-sm text-stone-600">{formatDate(recipe.date)}</p>
