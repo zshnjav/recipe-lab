@@ -3,7 +3,10 @@ title: "Gyudon (Japanese Beef Bowl)"
 date: 2026-02-18
 description: "A classic sweet and savory Japanese comfort dish featuring thinly sliced beef and onions simmered in a dashi-mirin broth."
 tags:
-  - "Japanese"
+  - "beef"
+  - "japanese"
+  - "rice"
+  - "onion"
 prepMinutes: 15
 cookMinutes: 15
 totalMinutes: 30
