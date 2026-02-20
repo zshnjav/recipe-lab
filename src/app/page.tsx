@@ -8,24 +8,29 @@ export default function Home() {
 
   return (
     <main className="mx-auto min-h-screen w-full max-w-6xl px-4 py-10 md:px-8">
-      <section className="mb-8 rounded-3xl border border-stone-200 bg-gradient-to-br from-amber-100 via-orange-50 to-lime-50 p-7 shadow-sm">
-        <h1 className="mb-3 text-4xl font-semibold leading-tight tracking-tight text-stone-900 md:text-5xl">
+      <section className="console-panel mb-8 p-7 md:p-8">
+        <p className="font-mono-ui mb-3 text-xs uppercase tracking-[0.12em] text-[var(--color-panel-text)]/70">
+          Recipe Lab // Personal Archive
+        </p>
+        <h1 className="mb-3 text-4xl font-semibold leading-tight tracking-tight text-[var(--color-panel-text)] md:text-5xl">
           My kitchen-tested recipes, written the way I actually cook.
         </h1>
-        <p className="max-w-2xl text-sm leading-7 text-stone-700 md:text-base">
-          Clear measurements, mise-en-place steps, and instructions written for someone who is not
-          a chef but is good at following directions.
+        <p className="max-w-2xl text-base text-[var(--color-panel-text)]/88">
+          Repeatable instructions, clear specs, and no guesswork.
+        </p>
+        <p className="font-mono-ui mt-4 text-xs uppercase tracking-[0.09em] text-[var(--color-panel-text)]/65">
+          Test, taste, iterate.
         </p>
         <div className="mt-5 flex flex-wrap gap-3">
           <Link
             href="/recipes"
-            className="rounded-xl bg-stone-900 px-4 py-2.5 text-sm font-semibold text-white hover:bg-stone-800"
+            className="rounded-md border border-[var(--color-panel-text)]/20 bg-[var(--color-panel-text)] px-4 py-2.5 text-sm font-semibold text-[var(--color-panel)] transition hover:bg-[var(--color-panel-text)]/90"
           >
             Browse all recipes
           </Link>
           <Link
             href="/tags"
-            className="rounded-xl border border-stone-300 bg-white px-4 py-2.5 text-sm font-semibold text-stone-800 hover:bg-stone-100"
+            className="rounded-md border border-[var(--color-panel-text)]/35 bg-transparent px-4 py-2.5 text-sm font-semibold text-[var(--color-panel-text)] transition hover:bg-[var(--color-panel-text)]/10"
           >
             Browse by tags
           </Link>
@@ -42,7 +47,10 @@ export default function Home() {
         showAllTag={false}
       />
       <div className="mt-8 text-right">
-        <Link href="/recipes" className="text-sm font-semibold text-amber-800 hover:text-amber-900">
+        <Link
+          href="/recipes"
+          className="font-mono-ui text-xs font-medium uppercase tracking-[0.08em] text-[var(--color-muted)] hover:text-[var(--color-fg)]"
+        >
           View full recipe archive
         </Link>
       </div>

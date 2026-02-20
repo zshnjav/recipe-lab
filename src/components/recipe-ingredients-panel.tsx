@@ -116,24 +116,26 @@ export function RecipeIngredientsPanel({ ingredients, baseServings }: RecipeIngr
 
   return (
     <section className="mt-6">
-      <div className="rounded-xl border border-stone-200 bg-stone-50 p-4">
+      <div className="rounded-md border border-[var(--color-border)] bg-[#f0ede6] p-4">
         <div className="flex flex-wrap items-center justify-between gap-3">
-          <h2 className="text-lg font-semibold text-stone-900">Ingredients</h2>
+          <h2 className="font-mono-ui text-xs font-medium uppercase tracking-[0.1em] text-[var(--color-muted)]">
+            Ingredients
+          </h2>
           <div className="flex items-center gap-2">
             <button
               type="button"
               onClick={() => setServings((value) => Math.max(1, value - 1))}
-              className="h-8 w-8 rounded-lg border border-stone-300 bg-white text-sm font-semibold text-stone-800 hover:bg-stone-100"
+              className="h-8 w-8 rounded-sm border border-[var(--color-border)] bg-[#f8f5ee] text-sm font-semibold text-[var(--color-fg)] hover:border-[var(--color-accent)]"
             >
               -
             </button>
-            <span className="min-w-24 text-center text-sm font-medium text-stone-700">
+            <span className="font-mono-ui min-w-24 text-center text-xs uppercase tracking-[0.08em] text-[var(--color-muted)]">
               {servings} servings
             </span>
             <button
               type="button"
               onClick={() => setServings((value) => value + 1)}
-              className="h-8 w-8 rounded-lg border border-stone-300 bg-white text-sm font-semibold text-stone-800 hover:bg-stone-100"
+              className="h-8 w-8 rounded-sm border border-[var(--color-border)] bg-[#f8f5ee] text-sm font-semibold text-[var(--color-fg)] hover:border-[var(--color-accent)]"
             >
               +
             </button>
@@ -146,17 +148,17 @@ export function RecipeIngredientsPanel({ ingredients, baseServings }: RecipeIngr
             return (
               <label
                 key={`${ingredient.name}-${index}`}
-                className="flex items-start gap-3 rounded-lg border border-stone-200 bg-white p-2.5"
+                className="flex items-start gap-3 rounded-sm border border-[var(--color-border)] bg-[#fbfaf6] p-2.5"
               >
                 <input
                   type="checkbox"
                   checked={selected.has(index)}
                   onChange={() => toggleSelection(index)}
-                  className="mt-1 h-4 w-4 accent-amber-600"
+                  className="mt-1 h-4 w-4 accent-[var(--color-accent)]"
                 />
                 <div className="flex w-full flex-wrap items-start justify-between gap-2">
-                  <span className="text-sm text-stone-800">{ingredient.name}</span>
-                  <span className="text-sm font-medium text-stone-700">
+                  <span className="text-sm text-[var(--color-fg)]">{ingredient.name}</span>
+                  <span className="font-mono-ui text-[0.72rem] uppercase tracking-[0.08em] text-[var(--color-muted)]">
                     {measurement.common && measurement.grams
                       ? `${measurement.common} (${measurement.grams})`
                       : measurement.common ?? measurement.grams}
@@ -171,11 +173,15 @@ export function RecipeIngredientsPanel({ ingredients, baseServings }: RecipeIngr
           <button
             type="button"
             onClick={copySelected}
-            className="rounded-lg bg-stone-900 px-3 py-2 text-xs font-semibold text-white hover:bg-stone-800"
+            className="font-mono-ui rounded-sm border border-[var(--color-panel)] bg-[var(--color-panel)] px-3 py-2 text-xs font-medium uppercase tracking-[0.08em] text-[var(--color-panel-text)] hover:border-[var(--color-accent)] hover:text-[var(--color-accent)]"
           >
             Copy shopping list
           </button>
-          {copyStatus ? <span className="text-xs text-stone-600">{copyStatus}</span> : null}
+          {copyStatus ? (
+            <span className="font-mono-ui text-[0.68rem] uppercase tracking-[0.08em] text-[var(--color-muted)]">
+              {copyStatus}
+            </span>
+          ) : null}
         </div>
       </div>
     </section>

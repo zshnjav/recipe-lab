@@ -92,13 +92,17 @@ function MethodSection({ title, lines }: { title: string; lines: string[] }) {
 
   return (
     <section className="space-y-4">
-      <h3 className="text-xl font-semibold text-stone-900">{title}</h3>
+      <div className="border-b border-[var(--color-border)] pb-2">
+        <h3 className="font-mono-ui text-xs font-semibold uppercase tracking-[0.12em] text-[var(--color-muted)]">
+          {title}
+        </h3>
+      </div>
       {parsed.steps.length > 0 ? (
         <ol className="space-y-3">
           {parsed.steps.map((step) => (
             <li
               key={step}
-              className="rounded-xl border border-stone-200 bg-white p-4 text-sm leading-6 text-stone-800"
+              className="rounded-md border border-[var(--color-border)] bg-[#fbfaf6] p-4 text-sm leading-6 text-[var(--color-fg)]"
             >
               {step}
             </li>
@@ -106,7 +110,7 @@ function MethodSection({ title, lines }: { title: string; lines: string[] }) {
         </ol>
       ) : null}
       {parsed.paragraphs.map((paragraph) => (
-        <p key={paragraph} className="text-sm leading-7 text-stone-700">
+        <p key={paragraph} className="text-sm leading-7 text-[var(--color-muted)]">
           {paragraph}
         </p>
       ))}
@@ -115,19 +119,23 @@ function MethodSection({ title, lines }: { title: string; lines: string[] }) {
           {parsed.images.map((image) => (
             <figure
               key={`${image.src}-${image.alt}`}
-              className="overflow-hidden rounded-xl border border-stone-200 bg-white"
+              className="overflow-hidden rounded-md border border-[var(--color-border)] bg-[#fbfaf6]"
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src={image.src} alt={image.alt} className="h-auto w-full object-cover" loading="lazy" />
-              <figcaption className="px-3 py-2 text-xs text-stone-600">{image.alt}</figcaption>
+              <figcaption className="font-mono-ui px-3 py-2 text-[0.68rem] uppercase tracking-[0.08em] text-[var(--color-muted)]">
+                {image.alt}
+              </figcaption>
             </figure>
           ))}
         </div>
       ) : null}
       {parsed.notes.length > 0 ? (
         <div>
-          <h4 className="mb-2 text-base font-semibold text-stone-900">Notes</h4>
-          <ul className="list-disc space-y-2 pl-5 text-sm text-stone-700">
+          <h4 className="font-mono-ui mb-2 text-xs font-semibold uppercase tracking-[0.12em] text-[var(--color-muted)]">
+            Notes
+          </h4>
+          <ul className="list-disc space-y-2 pl-5 text-sm text-[var(--color-muted)]">
             {parsed.notes.map((note) => (
               <li key={note}>{note}</li>
             ))}
@@ -149,7 +157,9 @@ export function RecipeMethod({ body }: RecipeMethodProps) {
 
   return (
     <section className="space-y-6">
-      <h2 className="text-2xl font-semibold text-stone-900">Method</h2>
+      <h2 className="font-mono-ui text-xs font-semibold uppercase tracking-[0.12em] text-[var(--color-muted)]">
+        Method
+      </h2>
       <MethodSection title="Prep (Mise-en-Place)" lines={prep} />
       <MethodSection title="Execution" lines={execution} />
     </section>

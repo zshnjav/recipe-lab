@@ -15,31 +15,28 @@ interface RecipeCardProps {
 
 export function RecipeCard({ recipe }: RecipeCardProps) {
   return (
-    <article className="rounded-2xl border border-stone-200 bg-white p-5 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md">
-      <div className="mb-3 flex items-center justify-between gap-3 text-xs text-stone-500">
+    <article className="surface-card p-5 transition hover:-translate-y-0.5 hover:border-[var(--color-accent)]">
+      <div className="font-mono-ui mb-3 flex items-center justify-between gap-3 text-[0.68rem] uppercase tracking-[0.08em] text-[var(--color-muted)]">
         <span>{formatDate(recipe.date)}</span>
-        <span>{recipe.totalMinutes} min</span>
+        <span>Total {recipe.totalMinutes}m</span>
       </div>
-      <h3 className="mb-2 text-xl font-semibold tracking-tight text-stone-900">
-        <Link href={`/recipes/${recipe.slug}`} className="hover:text-amber-700">
+      <h3 className="mb-2 text-xl font-semibold tracking-tight text-[var(--color-fg)]">
+        <Link href={`/recipes/${recipe.slug}`} className="hover:text-[var(--color-accent-hover)]">
           {recipe.title}
         </Link>
       </h3>
-      <p className="mb-4 text-sm text-stone-700">{recipe.description}</p>
+      <p className="mb-4 text-sm text-[var(--color-muted)]">{recipe.description}</p>
       <ul className="mb-4 flex flex-wrap gap-2">
         {recipe.tags.map((tag) => (
           <li key={tag}>
-            <Link
-              href={`/tags/${encodeURIComponent(tag)}`}
-              className="inline-flex rounded-full border border-amber-200 bg-amber-50 px-3 py-1 text-xs font-medium text-amber-900 hover:bg-amber-100"
-            >
+            <Link href={`/tags/${encodeURIComponent(tag)}`} className="chip inline-flex px-2.5 py-1.5">
               #{tag}
             </Link>
           </li>
         ))}
       </ul>
-      <p className="text-xs text-stone-600">
-        Serves {recipe.servings} • Prep {recipe.prepMinutes} min • Cook {recipe.cookMinutes} min
+      <p className="font-mono-ui text-[0.68rem] uppercase tracking-[0.08em] text-[var(--color-muted)]">
+        Servings {recipe.servings} / Prep {recipe.prepMinutes}m / Cook {recipe.cookMinutes}m
       </p>
     </article>
   );

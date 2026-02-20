@@ -24,12 +24,17 @@ export default async function TagPage({ params }: TagPageProps) {
 
   return (
     <main className="mx-auto min-h-screen w-full max-w-6xl px-4 py-10 md:px-8">
-      <Link href="/recipes" className="text-sm font-medium text-amber-800 hover:text-amber-900">
+      <Link
+        href="/recipes"
+        className="font-mono-ui text-xs uppercase tracking-[0.09em] text-[var(--color-muted)] hover:text-[var(--color-fg)]"
+      >
         Back to recipes
       </Link>
       <header className="mb-6 mt-4">
-        <h1 className="text-4xl font-semibold tracking-tight text-stone-900">#{decodedTag}</h1>
-        <p className="mt-2 text-sm text-stone-700">{recipes.length} matching recipes</p>
+        <h1 className="text-4xl font-semibold tracking-tight text-[var(--color-fg)]">#{decodedTag}</h1>
+        <p className="font-mono-ui mt-2 text-xs uppercase tracking-[0.09em] text-[var(--color-muted)]">
+          {recipes.length} matching recipes
+        </p>
       </header>
       <div className="grid gap-4 md:grid-cols-2">
         {recipes.map((recipe) => (

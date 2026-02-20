@@ -1,16 +1,18 @@
 import type { Metadata } from "next";
-import { Fraunces, Instrument_Sans } from "next/font/google";
+import { IBM_Plex_Sans, JetBrains_Mono } from "next/font/google";
 import Link from "next/link";
 import "./globals.css";
 
-const heading = Fraunces({
-  variable: "--font-fraunces",
+const body = IBM_Plex_Sans({
+  variable: "--font-body",
   subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
 });
 
-const body = Instrument_Sans({
-  variable: "--font-instrument",
+const mono = JetBrains_Mono({
+  variable: "--font-mono-ui",
   subsets: ["latin"],
+  weight: ["400", "500", "600"],
 });
 
 export const metadata: Metadata = {
@@ -25,18 +27,21 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${heading.variable} ${body.variable} antialiased`}>
-        <header className="border-b border-stone-200 bg-white/90 backdrop-blur">
+      <body className={`${body.variable} ${mono.variable} antialiased`}>
+        <header className="border-b border-[var(--color-border)] bg-[var(--color-bg)]/95 backdrop-blur">
           <div className="mx-auto flex w-full max-w-6xl items-center justify-between px-4 py-4 md:px-8">
-            <Link href="/" className="font-heading text-2xl font-semibold tracking-tight text-stone-900">
+            <Link href="/" className="text-2xl font-semibold tracking-tight text-[var(--color-fg)]">
               Recipe Lab
             </Link>
-            <nav className="flex items-center gap-4 text-sm font-medium text-stone-700">
-              <Link href="/" className="hover:text-amber-800">
+            <nav className="font-mono-ui flex items-center gap-5 text-xs font-medium uppercase tracking-[0.08em] text-[var(--color-muted)]">
+              <Link href="/" className="hover:text-[var(--color-fg)]">
                 Home
               </Link>
-              <Link href="/recipes" className="hover:text-amber-800">
+              <Link href="/recipes" className="hover:text-[var(--color-fg)]">
                 Recipes
+              </Link>
+              <Link href="/tags" className="hover:text-[var(--color-fg)]">
+                Tags
               </Link>
             </nav>
           </div>

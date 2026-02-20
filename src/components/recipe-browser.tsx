@@ -81,20 +81,20 @@ export function RecipeBrowser({
 
   return (
     <section className="space-y-6">
-      <div className="rounded-2xl border border-stone-200 bg-white p-4 shadow-sm">
+      <div className="surface-card p-4 md:p-5">
         <div className="flex flex-col gap-3 md:flex-row md:items-center">
           <input
             value={query}
             onChange={(event) => setQuery(event.target.value)}
             type="search"
             placeholder="Search by title, ingredients, or tags..."
-            className="w-full rounded-xl border border-stone-300 bg-stone-50 px-4 py-3 text-sm text-stone-900 outline-none ring-amber-300 focus:ring"
+            className="w-full rounded-md border border-[var(--color-border)] bg-[#f1efe8] px-4 py-3 text-sm text-[var(--color-fg)] outline-none transition placeholder:text-[var(--color-muted)] focus:border-[var(--color-accent)] focus:ring-2 focus:ring-[var(--color-focus)]/25"
           />
           {showRandomButton ? (
             <button
               type="button"
               onClick={openRandomRecipe}
-              className="inline-flex shrink-0 items-center justify-center rounded-xl border border-amber-300 bg-amber-100 px-4 py-3 text-sm font-semibold text-amber-900 hover:bg-amber-200"
+              className="font-mono-ui inline-flex shrink-0 items-center justify-center rounded-md border border-[var(--color-border)] bg-[#ece9e0] px-4 py-3 text-xs font-medium uppercase tracking-[0.07em] text-[var(--color-muted)] transition hover:border-[var(--color-accent)] hover:text-[var(--color-fg)]"
               disabled={filtered.length === 0}
             >
               Random recipe
@@ -107,10 +107,8 @@ export function RecipeBrowser({
               <button
                 type="button"
                 onClick={() => setActiveTag("all")}
-                className={`rounded-full px-3 py-1.5 text-xs font-medium ${
-                  activeTag === "all"
-                    ? "bg-stone-900 text-white"
-                    : "border border-stone-300 bg-white text-stone-700 hover:bg-stone-100"
+                className={`chip px-3 py-1.5 transition hover:border-[var(--color-accent)] hover:text-[var(--color-fg)] ${
+                  activeTag === "all" ? "chip-active" : ""
                 }`}
               >
                 All
@@ -122,10 +120,8 @@ export function RecipeBrowser({
               <button
                 type="button"
                 onClick={() => setActiveTag(tag)}
-                className={`rounded-full px-3 py-1.5 text-xs font-medium ${
-                  activeTag === tag
-                    ? "bg-amber-600 text-white"
-                    : "border border-amber-300 bg-amber-50 text-amber-900 hover:bg-amber-100"
+                className={`chip px-3 py-1.5 transition hover:border-[var(--color-accent)] hover:text-[var(--color-fg)] ${
+                  activeTag === tag ? "chip-active" : ""
                 }`}
               >
                 #{tag}
@@ -136,7 +132,7 @@ export function RecipeBrowser({
             <li>
               <Link
                 href={browseTagsHref}
-                className="inline-flex rounded-full border border-stone-300 bg-white px-3 py-1.5 text-xs font-medium text-stone-700 hover:bg-stone-100"
+                className="chip inline-flex px-3 py-1.5 transition hover:border-[var(--color-accent)] hover:text-[var(--color-fg)]"
               >
                 Browse by tags
               </Link>
@@ -146,7 +142,7 @@ export function RecipeBrowser({
       </div>
 
       {filtered.length === 0 ? (
-        <p className="rounded-xl border border-dashed border-stone-300 bg-white p-6 text-sm text-stone-600">
+        <p className="surface-card border-dashed p-6 text-sm text-[var(--color-muted)]">
           No recipes match this search yet.
         </p>
       ) : null}
@@ -157,7 +153,7 @@ export function RecipeBrowser({
         ))}
       </div>
       {initialCount && filtered.length > initialCount ? (
-        <p className="text-sm text-stone-600">
+        <p className="font-mono-ui text-xs uppercase tracking-[0.08em] text-[var(--color-muted)]">
           Showing {initialCount} of {filtered.length} matching recipes.
         </p>
       ) : null}
