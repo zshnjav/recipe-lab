@@ -93,7 +93,10 @@ export default async function RecipePage({ params }: RecipePageProps) {
           <ul className="mt-5 flex flex-wrap gap-2">
             {recipe.tags.map((tag) => (
               <li key={tag}>
-                <Link href={`/tags/${encodeURIComponent(tag)}`} className="chip inline-flex px-2.5 py-1.5">
+                <Link
+                  href={`/tags/${encodeURIComponent(tag)}`}
+                  className="inline-flex items-center rounded-sm border border-[var(--color-border)] bg-[var(--color-chip-bg)] px-3 py-1.5 font-mono-ui text-[0.72rem] uppercase leading-none tracking-[0.04em] text-[var(--color-muted)] transition duration-200 hover:border-[var(--color-accent)] hover:bg-[var(--color-chip-hover-bg)] hover:text-[var(--color-fg)]"
+                >
                   #{tag}
                 </Link>
               </li>

@@ -18,7 +18,9 @@ export function RecipeCard({ recipe }: RecipeCardProps) {
     <article className="surface-card p-5 transition hover:-translate-y-0.5 hover:border-[var(--color-accent)]">
       <div className="font-mono-ui mb-3 flex items-center justify-between gap-3 text-[0.68rem] uppercase tracking-[0.08em] text-[var(--color-muted)]">
         <span>{formatDate(recipe.date)}</span>
-        <span>Total {recipe.totalMinutes}m</span>
+        <span>
+          Total <span className="text-[var(--color-accent)]">{recipe.totalMinutes}m</span>
+        </span>
       </div>
       <h3 className="mb-2 text-xl font-semibold tracking-tight text-[var(--color-fg)]">
         <Link href={`/recipes/${recipe.slug}`} className="hover:text-[var(--color-accent-hover)]">

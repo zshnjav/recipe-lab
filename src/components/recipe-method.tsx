@@ -157,9 +157,6 @@ export function RecipeMethod({ body }: RecipeMethodProps) {
 
   return (
     <section className="space-y-6">
-      <h2 className="font-mono-ui text-xs font-semibold uppercase tracking-[0.12em] text-[var(--color-muted)]">
-        Method
-      </h2>
       <MethodSection title="Prep (Mise-en-Place)" lines={prep} />
       <MethodSection title="Execution" lines={execution} />
     </section>
