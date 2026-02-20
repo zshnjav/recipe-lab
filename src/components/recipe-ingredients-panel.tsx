@@ -44,7 +44,9 @@ function formatMeasurement(
       ? `${formatKitchenFraction(ingredient.amount.value * multiplier)} ${ingredient.amount.unit}`
       : undefined;
   const grams =
-    ingredient.grams !== undefined ? `${Math.round(ingredient.grams * multiplier)} g` : undefined;
+    ingredient.grams !== undefined && ingredient.grams > 0
+      ? `${Math.round(ingredient.grams * multiplier)} g`
+      : undefined;
 
   return { common, grams };
 }
@@ -82,7 +84,6 @@ async function copyTextToClipboard(text: string): Promise<boolean> {
 
 export function RecipeIngredientsPanel({ ingredients, baseServings }: RecipeIngredientsPanelProps) {
   const [servings, setServings] = useState(baseServings);
-  const [selected, setSelected] = useState<Set<number>>(new Set(ingredients.map((_, index) => index)));
   const [copyStatus, setCopyStatus] = useState<string>("");
 
   const multiplier = servings / baseServings;
@@ -91,26 +92,13 @@ export function RecipeIngredientsPanel({ ingredients, baseServings }: RecipeIngr
     [ingredients, multiplier],
   );
 
-  const toggleSelection = (index: number) => {
-    setSelected((current) => {
-      const updated = new Set(current);
-      if (updated.has(index)) {
-        updated.delete(index);
-      } else {
-        updated.add(index);
-      }
-      return updated;
-    });
-  };
-
-  const copySelected = async () => {
-    const lines = scaledLines.filter((_, index) => selected.has(index));
-    if (lines.length === 0) {
-      setCopyStatus("Select at least one ingredient.");
+  const copyList = async () => {
+    if (scaledLines.length === 0) {
+      setCopyStatus("No ingredients to copy.");
       return;
     }
 
-    const didCopy = await copyTextToClipboard(lines.join("\n"));
+    const didCopy = await copyTextToClipboard(scaledLines.join("\n"));
     setCopyStatus(didCopy ? "Shopping list copied." : "Clipboard unavailable in this browser.");
   };
 
@@ -146,25 +134,17 @@ export function RecipeIngredientsPanel({ ingredients, baseServings }: RecipeIngr
           {ingredients.map((ingredient, index) => {
             const measurement = formatMeasurement(ingredient, multiplier);
             return (
-              <label
+              <div
                 key={`${ingredient.name}-${index}`}
-                className="flex items-start gap-3 rounded-sm border border-[var(--color-border)] bg-[#fbfaf6] p-2.5"
+                className="flex items-start justify-between gap-3 rounded-sm border border-[var(--color-border)] bg-[#fbfaf6] px-3 py-2.5"
               >
-                <input
-                  type="checkbox"
-                  checked={selected.has(index)}
-                  onChange={() => toggleSelection(index)}
-                  className="mt-1 h-4 w-4 accent-[var(--color-accent)]"
-                />
-                <div className="flex w-full flex-wrap items-start justify-between gap-2">
-                  <span className="text-sm text-[var(--color-fg)]">{ingredient.name}</span>
-                  <span className="font-mono-ui text-[0.72rem] uppercase tracking-[0.08em] text-[var(--color-muted)]">
-                    {measurement.common && measurement.grams
-                      ? `${measurement.common} (${measurement.grams})`
-                      : measurement.common ?? measurement.grams}
-                  </span>
-                </div>
-              </label>
+                <span className="text-sm text-[var(--color-fg)]">{ingredient.name}</span>
+                <span className="font-mono-ui text-[0.72rem] uppercase tracking-[0.08em] text-[var(--color-muted)]">
+                  {measurement.common && measurement.grams
+                    ? `${measurement.common} (${measurement.grams})`
+                    : measurement.common ?? measurement.grams}
+                </span>
+              </div>
             );
           })}
         </div>
@@ -172,7 +152,7 @@ export function RecipeIngredientsPanel({ ingredients, baseServings }: RecipeIngr
         <div className="mt-4 flex flex-wrap items-center gap-2">
           <button
             type="button"
-            onClick={copySelected}
+            onClick={copyList}
             className="font-mono-ui rounded-sm border border-[var(--color-panel)] bg-[var(--color-panel)] px-3 py-2 text-xs font-medium uppercase tracking-[0.08em] text-[var(--color-panel-text)] hover:border-[var(--color-accent)] hover:text-[var(--color-accent)]"
           >
             Copy shopping list

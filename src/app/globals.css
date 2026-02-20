@@ -10,6 +10,17 @@
   --color-accent: #b98645;
   --color-accent-hover: #a77536;
   --color-focus: #c4904e;
+  --color-chip-bg: #f2f0ea;
+  --color-chip-hover-bg: #eee6d7;
+  --color-chip-selected-bg: #e8d7bc;
+  --color-chip-selected-text: #5f3f1a;
+  --color-browse-bg: #e8edf4;
+  --color-browse-hover-bg: #dde5ef;
+  --color-random-bg: #f0d8d7;
+  --color-random-border: #be8582;
+  --color-random-text: #7f2928;
+  --color-random-hover-bg: #ebc9c7;
+  --color-random-hover-border: #a95c59;
   --radius-sm: 0.4rem;
   --radius-md: 0.55rem;
   --shadow-soft: 0 3px 12px rgba(19, 26, 36, 0.07);

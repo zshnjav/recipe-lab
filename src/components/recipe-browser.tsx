@@ -53,6 +53,7 @@ export function RecipeBrowser({
   const router = useRouter();
   const [query, setQuery] = useState("");
   const [activeTag, setActiveTag] = useState<string>("all");
+  const [diceFace, setDiceFace] = useState<number>(5);
 
   const filtered = useMemo(() => {
     return recipes.filter((recipe) => {
@@ -79,6 +80,54 @@ export function RecipeBrowser({
     router.push(`/recipes/${filtered[randomIndex].slug}`);
   };
 
+  const onToggleTag = (tag: string) => {
+    setActiveTag((current) => (current === tag ? "all" : tag));
+  };
+
+  const randomizeDiceFace = () => {
+    setDiceFace((current) => {
+      let next = current;
+      while (next === current) {
+        next = Math.floor(Math.random() * 6) + 1;
+      }
+      return next;
+    });
+  };
+
+  const pipMap: Record<number, Array<[number, number]>> = {
+    1: [[50, 50]],
+    2: [
+      [30, 30],
+      [70, 70],
+    ],
+    3: [
+      [30, 30],
+      [50, 50],
+      [70, 70],
+    ],
+    4: [
+      [30, 30],
+      [70, 30],
+      [30, 70],
+      [70, 70],
+    ],
+    5: [
+      [30, 30],
+      [70, 30],
+      [50, 50],
+      [30, 70],
+      [70, 70],
+    ],
+    6: [
+      [30, 28],
+      [70, 28],
+      [30, 50],
+      [70, 50],
+      [30, 72],
+      [70, 72],
+    ],
+  };
+
   return (
     <section className="space-y-6">
       <div className="surface-card p-4 md:p-5">
@@ -94,10 +143,31 @@ export function RecipeBrowser({
             <button
               type="button"
               onClick={openRandomRecipe}
-              className="font-mono-ui inline-flex shrink-0 items-center justify-center rounded-md border border-[var(--color-border)] bg-[#ece9e0] px-4 py-3 text-xs font-medium uppercase tracking-[0.07em] text-[var(--color-muted)] transition hover:border-[var(--color-accent)] hover:text-[var(--color-fg)]"
+              onMouseEnter={randomizeDiceFace}
+              aria-label="Open random recipe"
+              className="group inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-md border border-[var(--color-random-border)] bg-[var(--color-random-bg)] text-[var(--color-random-text)] shadow-[0_2px_8px_rgba(45,26,30,0.1)] transition duration-200 hover:border-[var(--color-random-hover-border)] hover:bg-[var(--color-random-hover-bg)]"
               disabled={filtered.length === 0}
             >
-              Random recipe
+              <svg
+                viewBox="0 0 24 24"
+                className="h-8 w-8 transition-transform duration-300 group-hover:rotate-[360deg]"
+                aria-hidden="true"
+              >
+                <rect
+                  x="3.5"
+                  y="3.5"
+                  width="17"
+                  height="17"
+                  rx="3.2"
+                  fill="currentColor"
+                  opacity="0.2"
+                  stroke="currentColor"
+                  strokeWidth="1.1"
+                />
+                {pipMap[diceFace].map(([cx, cy], index) => (
+                  <circle key={`${cx}-${cy}-${index}`} cx={cx / 4} cy={cy / 4} r="1.25" fill="currentColor" />
+                ))}
+              </svg>
             </button>
           ) : null}
         </div>
@@ -107,8 +177,10 @@ export function RecipeBrowser({
               <button
                 type="button"
                 onClick={() => setActiveTag("all")}
-                className={`chip px-3 py-1.5 transition hover:border-[var(--color-accent)] hover:text-[var(--color-fg)] ${
-                  activeTag === "all" ? "chip-active" : ""
+                className={`inline-flex items-center rounded-sm border px-3 py-1.5 font-mono-ui text-[0.72rem] uppercase leading-none tracking-[0.04em] transition duration-200 ${
+                  activeTag === "all"
+                    ? "border-[var(--color-accent)] bg-[var(--color-chip-selected-bg)] text-[var(--color-chip-selected-text)]"
+                    : "border-[var(--color-border)] bg-[var(--color-chip-bg)] text-[var(--color-muted)] hover:border-[var(--color-accent)] hover:bg-[var(--color-chip-hover-bg)] hover:text-[var(--color-fg)]"
                 }`}
               >
                 All
@@ -119,9 +191,11 @@ export function RecipeBrowser({
             <li key={tag}>
               <button
                 type="button"
-                onClick={() => setActiveTag(tag)}
-                className={`chip px-3 py-1.5 transition hover:border-[var(--color-accent)] hover:text-[var(--color-fg)] ${
-                  activeTag === tag ? "chip-active" : ""
+                onClick={() => onToggleTag(tag)}
+                className={`inline-flex items-center rounded-sm border px-3 py-1.5 font-mono-ui text-[0.72rem] uppercase leading-none tracking-[0.04em] transition duration-200 ${
+                  activeTag === tag
+                    ? "border-[var(--color-accent)] bg-[var(--color-chip-selected-bg)] text-[var(--color-chip-selected-text)]"
+                    : "border-[var(--color-border)] bg-[var(--color-chip-bg)] text-[var(--color-muted)] hover:border-[var(--color-accent)] hover:bg-[var(--color-chip-hover-bg)] hover:text-[var(--color-fg)]"
                 }`}
               >
                 #{tag}
@@ -132,7 +206,7 @@ export function RecipeBrowser({
             <li>
               <Link
                 href={browseTagsHref}
-                className="chip inline-flex px-3 py-1.5 transition hover:border-[var(--color-accent)] hover:text-[var(--color-fg)]"
+                className="inline-flex items-center rounded-sm border border-[var(--color-border)] bg-[var(--color-browse-bg)] px-3 py-1.5 text-[0.72rem] font-medium uppercase leading-none tracking-[0.04em] text-[var(--color-fg)] transition duration-200 hover:border-[var(--color-accent)] hover:bg-[var(--color-browse-hover-bg)]"
               >
                 Browse by tags
               </Link>
