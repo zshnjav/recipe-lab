@@ -1,10 +1,9 @@
 import Link from "next/link";
 import { RecipeBrowser } from "@/components/recipe-browser";
-import { getAllTags, getRecipeSummaries } from "@/lib/recipes";
+import { getRecipeSummaries } from "@/lib/recipes";
 
 export default function Home() {
   const recipes = getRecipeSummaries();
-  const tags = getAllTags();
 
   return (
     <main className="mx-auto min-h-screen w-full max-w-6xl px-4 py-10 md:px-8">
@@ -16,10 +15,7 @@ export default function Home() {
           My kitchen-tested recipes, written the way I actually cook.
         </h1>
         <p className="max-w-2xl text-base text-[var(--color-panel-text)]/88">
-          Repeatable instructions, clear specs, and no guesswork.
-        </p>
-        <p className="font-mono-ui mt-4 text-xs uppercase tracking-[0.09em] text-[var(--color-panel-text)]/65">
-          Test, taste, iterate.
+          For someone who isn&apos;t a chef but is good at following directions.
         </p>
         <div className="mt-5 flex flex-wrap gap-3">
           <Link
@@ -32,7 +28,7 @@ export default function Home() {
       </section>
       <RecipeBrowser
         recipes={recipes}
-        tags={tags}
+        tags={[]}
         initialCount={6}
         showRandomButton
         featuredTagCount={10}

@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import type { RecipeSummary } from "@/types/recipe";
 import { RecipeCard } from "@/components/recipe-card";
 
@@ -20,6 +20,8 @@ interface RecipeBrowserProps {
 }
 
 type SortMode = "date_desc" | "time_asc";
+const DICE_ROLL_MS = 300;
+const DICE_LAND_DELAY_MS = 140;
 
 function getRandomIndex(maxExclusive: number): number {
   return Math.floor(Math.random() * maxExclusive);
@@ -61,6 +63,31 @@ function buildTagCounts(recipes: RecipeSummary[], excludedTags: Set<string>): Ma
   return counts;
 }
 
+function parseTagsParam(value: string | null): string[] {
+  if (!value) {
+    return [];
+  }
+
+  const seen = new Set<string>();
+  const tags: string[] = [];
+  for (const rawTag of value.split(",")) {
+    const normalizedTag = rawTag.trim();
+    if (!normalizedTag || seen.has(normalizedTag)) {
+      continue;
+    }
+    seen.add(normalizedTag);
+    tags.push(normalizedTag);
+  }
+  return tags;
+}
+
+function arraysEqual(a: string[], b: string[]): boolean {
+  if (a.length !== b.length) {
+    return false;
+  }
+  return a.every((value, index) => value === b[index]);
+}
+
 export function RecipeBrowser({
   recipes,
   tags,
@@ -74,15 +101,22 @@ export function RecipeBrowser({
   enableAdvancedTagFiltering = false,
 }: RecipeBrowserProps) {
   const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
   const [query, setQuery] = useState("");
   const [activeTag, setActiveTag] = useState<string>("all");
   const [tagQuery, setTagQuery] = useState("");
-  const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [diceFace, setDiceFace] = useState<number>(5);
   const [isDiceRolling, setIsDiceRolling] = useState(false);
+  const [isRandomPending, setIsRandomPending] = useState(false);
   const [sortMode, setSortMode] = useState<SortMode>("date_desc");
   const pendingRandomRecipeTimeout = useRef<number | null>(null);
   const useNavyConsoleModule = enableAdvancedTagFiltering;
+  const urlSelectedTags = useMemo(() => parseTagsParam(searchParams.get("tags")), [searchParams]);
+  const selectedTags = useMemo(
+    () => (enableAdvancedTagFiltering ? urlSelectedTags : []),
+    [enableAdvancedTagFiltering, urlSelectedTags],
+  );
 
   useEffect(() => {
     return () => {
@@ -91,6 +125,26 @@ export function RecipeBrowser({
       }
     };
   }, []);
+
+  const setBrowseSelectedTags = (nextTags: string[]) => {
+    if (!enableAdvancedTagFiltering || pathname !== "/recipes") {
+      return;
+    }
+
+    if (arraysEqual(nextTags, selectedTags)) {
+      return;
+    }
+
+    const nextParams = new URLSearchParams(searchParams.toString());
+    if (nextTags.length > 0) {
+      nextParams.set("tags", nextTags.join(","));
+    } else {
+      nextParams.delete("tags");
+    }
+
+    const nextQuery = nextParams.toString();
+    router.replace(nextQuery ? `${pathname}?${nextQuery}` : pathname, { scroll: false });
+  };
 
   const filteredSimple = useMemo(() => {
     return recipes.filter((recipe) => {
@@ -131,6 +185,7 @@ export function RecipeBrowser({
     }
     return pickRandomTags(tags, featuredTagCount);
   }, [tags, featuredTagCount]);
+  const hasSimpleControls = showAllTag || simpleVisibleTags.length > 0 || showBrowseTagsPill;
 
   const advancedAvailableTags = useMemo(() => {
     const baseRecipes = selectedTags.length > 0 ? matchingRecipesByTags : recipes;
@@ -151,18 +206,21 @@ export function RecipeBrowser({
   }, [matchingRecipesByTags, recipes, selectedTags, tagQuery]);
 
   const openRandomRecipe = () => {
-    if (sortedFiltered.length === 0 || isDiceRolling) {
+    if (sortedFiltered.length === 0 || isRandomPending) {
       return;
     }
 
     randomizeDiceFace();
     setIsDiceRolling(true);
+    setIsRandomPending(true);
 
     const randomIndex = getRandomIndex(sortedFiltered.length);
     const randomSlug = sortedFiltered[randomIndex].slug;
     pendingRandomRecipeTimeout.current = window.setTimeout(() => {
+      setIsDiceRolling(false);
+      setIsRandomPending(false);
       router.push(`/recipes/${randomSlug}`);
-    }, 220);
+    }, DICE_ROLL_MS + DICE_LAND_DELAY_MS);
   };
 
   const onToggleSimpleTag = (tag: string) => {
@@ -170,21 +228,21 @@ export function RecipeBrowser({
   };
 
   const onToggleAdvancedTag = (tag: string) => {
-    setSelectedTags((current) => {
-      if (current.includes(tag)) {
-        return current.filter((value) => value !== tag);
-      }
-      setTagQuery("");
-      return [...current, tag];
-    });
+    if (selectedTags.includes(tag)) {
+      setBrowseSelectedTags(selectedTags.filter((value) => value !== tag));
+      return;
+    }
+
+    setTagQuery("");
+    setBrowseSelectedTags([...selectedTags, tag]);
   };
 
   const clearSelectedTags = () => {
-    setSelectedTags([]);
+    setBrowseSelectedTags([]);
   };
 
   const clearAllAdvanced = () => {
-    setSelectedTags([]);
+    setBrowseSelectedTags([]);
     setTagQuery("");
     setQuery("");
   };
@@ -265,13 +323,12 @@ export function RecipeBrowser({
                 onMouseEnter={randomizeDiceFace}
                 aria-label="Open random recipe"
                 className="group inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-md border border-[var(--color-random-border)] bg-[var(--color-random-bg)] text-[var(--color-random-text)] shadow-[0_2px_8px_rgba(45,26,30,0.1)] transition duration-200 hover:border-[var(--color-random-hover-border)] hover:bg-[var(--color-random-hover-bg)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-focus)]/40"
-                disabled={sortedFiltered.length === 0 || isDiceRolling}
+                disabled={sortedFiltered.length === 0 || isRandomPending}
               >
                 <svg
                   viewBox="0 0 24 24"
-                  onAnimationEnd={() => setIsDiceRolling(false)}
                   className={`h-8 w-8 transition-transform duration-300 group-hover:rotate-[360deg] ${
-                    isDiceRolling ? "dice-roll-once" : ""
+                    isDiceRolling ? "dice-click-spin" : ""
                   }`}
                   aria-hidden="true"
                 >
@@ -365,48 +422,50 @@ export function RecipeBrowser({
             </div>
           </div>
         ) : (
-          <ul className="mt-4 flex flex-wrap gap-2">
-            {showAllTag ? (
-              <li>
-                <button
-                  type="button"
-                  onClick={() => setActiveTag("all")}
-                  className={`inline-flex items-center rounded-sm border px-3 py-1.5 font-mono-ui text-[0.72rem] uppercase leading-none tracking-[0.04em] transition duration-200 ${
-                    activeTag === "all"
-                      ? "border-[var(--color-accent)] bg-[var(--color-chip-selected-bg)] text-[var(--color-chip-selected-text)]"
-                      : "border-[var(--color-border)] bg-[var(--color-chip-bg)] text-[var(--color-muted)] hover:border-[var(--color-accent)] hover:bg-[var(--color-chip-hover-bg)] hover:text-[var(--color-fg)]"
-                  }`}
-                >
-                  All
-                </button>
-              </li>
-            ) : null}
-            {simpleVisibleTags.map((tag) => (
-              <li key={tag}>
-                <button
-                  type="button"
-                  onClick={() => onToggleSimpleTag(tag)}
-                  className={`inline-flex items-center rounded-sm border px-3 py-1.5 font-mono-ui text-[0.72rem] uppercase leading-none tracking-[0.04em] transition duration-200 ${
-                    activeTag === tag
-                      ? "border-[var(--color-accent)] bg-[var(--color-chip-selected-bg)] text-[var(--color-chip-selected-text)]"
-                      : "border-[var(--color-border)] bg-[var(--color-chip-bg)] text-[var(--color-muted)] hover:border-[var(--color-accent)] hover:bg-[var(--color-chip-hover-bg)] hover:text-[var(--color-fg)]"
-                  }`}
-                >
-                  #{tag}
-                </button>
-              </li>
-            ))}
-            {showBrowseTagsPill ? (
-              <li>
-                <Link
-                  href={browseTagsHref}
-                  className="inline-flex items-center rounded-sm border border-[var(--color-border)] bg-[var(--color-browse-bg)] px-3 py-1.5 text-[0.72rem] font-medium uppercase leading-none tracking-[0.04em] text-[var(--color-fg)] transition duration-200 hover:border-[var(--color-accent)] hover:bg-[var(--color-browse-hover-bg)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-focus)]/40"
-                >
-                  {browseActionLabel}
-                </Link>
-              </li>
-            ) : null}
-          </ul>
+          hasSimpleControls ? (
+            <ul className="mt-4 flex flex-wrap gap-2">
+              {showAllTag ? (
+                <li>
+                  <button
+                    type="button"
+                    onClick={() => setActiveTag("all")}
+                    className={`inline-flex items-center rounded-sm border px-3 py-1.5 font-mono-ui text-[0.72rem] uppercase leading-none tracking-[0.04em] transition duration-200 ${
+                      activeTag === "all"
+                        ? "border-[var(--color-accent)] bg-[var(--color-chip-selected-bg)] text-[var(--color-chip-selected-text)]"
+                        : "border-[var(--color-border)] bg-[var(--color-chip-bg)] text-[var(--color-muted)] hover:border-[var(--color-accent)] hover:bg-[var(--color-chip-hover-bg)] hover:text-[var(--color-fg)]"
+                    }`}
+                  >
+                    All
+                  </button>
+                </li>
+              ) : null}
+              {simpleVisibleTags.map((tag) => (
+                <li key={tag}>
+                  <button
+                    type="button"
+                    onClick={() => onToggleSimpleTag(tag)}
+                    className={`inline-flex items-center rounded-sm border px-3 py-1.5 font-mono-ui text-[0.72rem] uppercase leading-none tracking-[0.04em] transition duration-200 ${
+                      activeTag === tag
+                        ? "border-[var(--color-accent)] bg-[var(--color-chip-selected-bg)] text-[var(--color-chip-selected-text)]"
+                        : "border-[var(--color-border)] bg-[var(--color-chip-bg)] text-[var(--color-muted)] hover:border-[var(--color-accent)] hover:bg-[var(--color-chip-hover-bg)] hover:text-[var(--color-fg)]"
+                    }`}
+                  >
+                    #{tag}
+                  </button>
+                </li>
+              ))}
+              {showBrowseTagsPill ? (
+                <li>
+                  <Link
+                    href={browseTagsHref}
+                    className="inline-flex items-center rounded-sm border border-[var(--color-border)] bg-[var(--color-browse-bg)] px-3 py-1.5 text-[0.72rem] font-medium uppercase leading-none tracking-[0.04em] text-[var(--color-fg)] transition duration-200 hover:border-[var(--color-accent)] hover:bg-[var(--color-browse-hover-bg)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-focus)]/40"
+                  >
+                    {browseActionLabel}
+                  </Link>
+                </li>
+              ) : null}
+            </ul>
+          ) : null
         )}
       </div>
 

@@ -1,4 +1,7 @@
+"use client";
+
 import Link from "next/link";
+import { usePathname, useSearchParams } from "next/navigation";
 import type { RecipeSummary } from "@/types/recipe";
 
 function formatDate(date: string): string {
@@ -14,6 +17,24 @@ interface RecipeCardProps {
 }
 
 export function RecipeCard({ recipe }: RecipeCardProps) {
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+
+  const buildBrowseTagHref = (tag: string): string => {
+    const params = new URLSearchParams(searchParams.toString());
+    const rawTags = params.get("tags");
+    const existingTags = rawTags
+      ? rawTags
+          .split(",")
+          .map((value) => value.trim())
+          .filter(Boolean)
+      : [];
+    const nextTags = existingTags.includes(tag) ? existingTags : [...existingTags, tag];
+    params.set("tags", nextTags.join(","));
+
+    return `/recipes?${params.toString()}`;
+  };
+
   return (
     <article className="surface-card p-5 transition hover:-translate-y-0.5 hover:border-[var(--color-accent)]">
       <div className="font-mono-ui mb-3 flex items-center justify-between gap-3 text-[0.68rem] uppercase tracking-[0.08em] text-[var(--color-muted)]">
@@ -32,7 +53,7 @@ export function RecipeCard({ recipe }: RecipeCardProps) {
         {recipe.tags.map((tag) => (
           <li key={tag}>
             <Link
-              href={`/tags/${encodeURIComponent(tag)}`}
+              href={pathname === "/recipes" ? buildBrowseTagHref(tag) : `/recipes?tags=${encodeURIComponent(tag)}`}
               className="inline-flex items-center rounded-sm border border-[var(--color-border)] bg-[var(--color-chip-bg)] px-3 py-1.5 font-mono-ui text-[0.72rem] uppercase leading-none tracking-[0.04em] text-[var(--color-muted)] transition duration-200 hover:border-[var(--color-accent)] hover:bg-[var(--color-chip-hover-bg)] hover:text-[var(--color-fg)]"
             >
               #{tag}

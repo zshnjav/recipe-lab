@@ -98,18 +98,15 @@ h4 {
   animation: chip-fly-in 180ms ease;
 }
 
-@keyframes dice-roll-once {
-  0% {
-    transform: rotate(0deg) scale(1);
+@keyframes dice-click-spin {
+  from {
+    transform: rotate(0deg);
   }
-  70% {
-    transform: rotate(290deg) scale(0.92);
-  }
-  100% {
-    transform: rotate(360deg) scale(1);
+  to {
+    transform: rotate(360deg);
   }
 }
 
-.dice-roll-once {
-  animation: dice-roll-once 220ms cubic-bezier(0.2, 0.7, 0.2, 1);
+.dice-click-spin {
+  animation: dice-click-spin 300ms ease;
 }
