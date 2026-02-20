@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { RecipeIngredientsPanel } from "@/components/recipe-ingredients-panel";
 import { RecipeMethod } from "@/components/recipe-method";
-import { getAllRecipes, getRecipeBySlug, getRecipeSlugs } from "@/lib/recipes";
+import { getRecipeBySlug, getRecipeSlugs } from "@/lib/recipes";
 
 interface RecipePageProps {
   params: Promise<{ slug: string }>;
@@ -43,10 +43,6 @@ export default async function RecipePage({ params }: RecipePageProps) {
   if (!recipe) {
     notFound();
   }
-
-  const related = getAllRecipes()
-    .filter((item) => item.slug !== recipe.slug && item.tags.some((tag) => recipe.tags.includes(tag)))
-    .slice(0, 3);
 
   return (
     <main className="mx-auto min-h-screen w-full max-w-6xl px-4 py-10 md:px-8">
@@ -89,7 +85,16 @@ export default async function RecipePage({ params }: RecipePageProps) {
               </div>
             </dl>
           </div>
-          <RecipeIngredientsPanel ingredients={recipe.ingredients} baseServings={recipe.servings} />
+          <RecipeIngredientsPanel
+            ingredients={recipe.ingredients}
+            baseServings={recipe.servings}
+            recipeTitle={recipe.title}
+            recipeDescription={recipe.description}
+            prepMinutes={recipe.prepMinutes}
+            cookMinutes={recipe.cookMinutes}
+            totalMinutes={recipe.totalMinutes}
+            methodBody={recipe.body}
+          />
           <ul className="mt-5 flex flex-wrap gap-2">
             {recipe.tags.map((tag) => (
               <li key={tag}>
@@ -108,23 +113,6 @@ export default async function RecipePage({ params }: RecipePageProps) {
           <div className="surface-card bg-[#f6f3ec] p-6">
             <RecipeMethod body={recipe.body} />
           </div>
-          {related.length > 0 ? (
-            <div>
-              <h2 className="mb-3 text-xl font-semibold text-[var(--color-fg)]">Related recipes</h2>
-              <ul className="space-y-2">
-                {related.map((item) => (
-                  <li key={item.slug}>
-                    <Link
-                      href={`/recipes/${item.slug}`}
-                      className="text-sm font-medium text-[var(--color-muted)] hover:text-[var(--color-accent-hover)]"
-                    >
-                      {item.title}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ) : null}
         </section>
       </article>
     </main>

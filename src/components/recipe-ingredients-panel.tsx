@@ -6,6 +6,12 @@ import type { RecipeIngredient } from "@/types/recipe";
 interface RecipeIngredientsPanelProps {
   ingredients: RecipeIngredient[];
   baseServings: number;
+  recipeTitle: string;
+  recipeDescription: string;
+  prepMinutes: number;
+  cookMinutes: number;
+  totalMinutes: number;
+  methodBody: string;
 }
 
 function formatKitchenFraction(value: number): string {
@@ -82,7 +88,16 @@ async function copyTextToClipboard(text: string): Promise<boolean> {
   return false;
 }
 
-export function RecipeIngredientsPanel({ ingredients, baseServings }: RecipeIngredientsPanelProps) {
+export function RecipeIngredientsPanel({
+  ingredients,
+  baseServings,
+  recipeTitle,
+  recipeDescription,
+  prepMinutes,
+  cookMinutes,
+  totalMinutes,
+  methodBody,
+}: RecipeIngredientsPanelProps) {
   const [servings, setServings] = useState(baseServings);
   const [copyStatus, setCopyStatus] = useState<string>("");
 
@@ -98,8 +113,35 @@ export function RecipeIngredientsPanel({ ingredients, baseServings }: RecipeIngr
       return;
     }
 
-    const didCopy = await copyTextToClipboard(scaledLines.join("\n"));
+    const shoppingListText = `${recipeTitle}\n${scaledLines.join("\n")}`;
+    const didCopy = await copyTextToClipboard(shoppingListText);
     setCopyStatus(didCopy ? "Shopping list copied." : "Clipboard unavailable in this browser.");
+  };
+
+  const copyFullRecipe = async () => {
+    if (scaledLines.length === 0) {
+      setCopyStatus("No recipe data to copy.");
+      return;
+    }
+
+    const fullRecipeText = [
+      recipeTitle,
+      recipeDescription,
+      "",
+      `Prep: ${prepMinutes}m`,
+      `Cook: ${cookMinutes}m`,
+      `Total: ${totalMinutes}m`,
+      `Servings: ${servings}`,
+      "",
+      "Ingredients",
+      ...scaledLines.map((line) => `- ${line}`),
+      "",
+      "Method",
+      methodBody.trim(),
+    ].join("\n");
+
+    const didCopy = await copyTextToClipboard(fullRecipeText);
+    setCopyStatus(didCopy ? "Full recipe copied." : "Clipboard unavailable in this browser.");
   };
 
   return (
@@ -157,12 +199,19 @@ export function RecipeIngredientsPanel({ ingredients, baseServings }: RecipeIngr
           >
             Copy shopping list
           </button>
-          {copyStatus ? (
-            <span className="font-mono-ui text-[0.68rem] uppercase tracking-[0.08em] text-[var(--color-muted)]">
-              {copyStatus}
-            </span>
-          ) : null}
+          <button
+            type="button"
+            onClick={copyFullRecipe}
+            className="font-mono-ui ml-auto rounded-sm border border-[var(--color-border)] bg-[#f8f5ee] px-3 py-2 text-xs font-medium uppercase tracking-[0.08em] text-[var(--color-fg)] hover:border-[var(--color-accent)] hover:text-[var(--color-accent-hover)]"
+          >
+            Copy full recipe
+          </button>
         </div>
+        {copyStatus ? (
+          <p className="font-mono-ui mt-2 text-[0.68rem] uppercase tracking-[0.08em] text-[var(--color-muted)]">
+            {copyStatus}
+          </p>
+        ) : null}
       </div>
     </section>
   );
