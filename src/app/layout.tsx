@@ -38,10 +38,7 @@ export default function RootLayout({
                 Home
               </Link>
               <Link href="/recipes" className="hover:text-[var(--color-fg)]">
-                Recipes
-              </Link>
-              <Link href="/tags" className="hover:text-[var(--color-fg)]">
-                Tags
+                Browse
               </Link>
             </nav>
           </div>
