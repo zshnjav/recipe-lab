@@ -82,6 +82,7 @@ export function RecipeBrowser({
   const [isDiceRolling, setIsDiceRolling] = useState(false);
   const [sortMode, setSortMode] = useState<SortMode>("date_desc");
   const pendingRandomRecipeTimeout = useRef<number | null>(null);
+  const useNavyConsoleModule = enableAdvancedTagFiltering;
 
   useEffect(() => {
     return () => {
@@ -234,10 +235,14 @@ export function RecipeBrowser({
 
   return (
     <section className="space-y-6">
-      <div className="surface-card p-4 md:p-5">
+      <div className={useNavyConsoleModule ? "console-panel p-4 md:p-5" : "surface-card p-4 md:p-5"}>
         <div className="space-y-1">
           {enableAdvancedTagFiltering ? (
-            <p className="font-mono-ui text-[0.72rem] uppercase tracking-[0.1em] text-[var(--color-muted)]">
+            <p
+              className={`font-mono-ui text-[0.72rem] uppercase tracking-[0.1em] ${
+                useNavyConsoleModule ? "text-[#a9b5c8]" : "text-[var(--color-muted)]"
+              }`}
+            >
               Recipe Search
             </p>
           ) : null}
@@ -251,7 +256,7 @@ export function RecipeBrowser({
                   ? "Search recipes (title, ingredients, tags)..."
                   : "Search by title, ingredients, or tags..."
               }
-              className="min-w-0 flex-1 rounded-md border border-[var(--color-border)] bg-[#f1efe8] px-4 py-3 text-sm text-[var(--color-fg)] outline-none transition placeholder:text-[var(--color-muted)] focus:border-[var(--color-accent)] focus:ring-2 focus:ring-[var(--color-focus)]/25"
+              className="min-w-0 flex-1 rounded-md border border-[#d2d7df] bg-[#f1efe8] px-4 py-3 text-sm text-[var(--color-fg)] outline-none transition placeholder:text-[var(--color-muted)] focus:border-[var(--color-accent)] focus:ring-2 focus:ring-[var(--color-focus)]/25"
             />
             {showRandomButton ? (
               <button
@@ -291,20 +296,20 @@ export function RecipeBrowser({
         </div>
 
         {enableAdvancedTagFiltering ? (
-          <div className="mt-4 rounded-md border border-[var(--color-border)] bg-[#f6f3eb] p-4">
-            <h3 className="font-mono-ui text-[0.72rem] uppercase tracking-[0.1em] text-[var(--color-muted)]">
+          <div className="mt-4 rounded-md border border-[#3f4d66] bg-[#1b2738] p-4">
+            <h3 className="font-mono-ui text-[0.72rem] uppercase tracking-[0.1em] text-[#a9b5c8]">
               Filters
             </h3>
-            <div className="mt-3 border-t border-[var(--color-border)] pt-3">
+            <div className="mt-3 border-t border-[#3f4d66] pt-3">
               <div className="flex flex-wrap items-center justify-between gap-2">
-                <h4 className="font-mono-ui text-[0.72rem] uppercase tracking-[0.09em] text-[var(--color-muted)]">
+                <h4 className="font-mono-ui text-[0.72rem] uppercase tracking-[0.09em] text-[#a9b5c8]">
                   Selected tags
                 </h4>
                 {selectedTags.length > 0 ? (
                   <button
                     type="button"
                     onClick={clearSelectedTags}
-                    className="font-mono-ui rounded-sm border border-[var(--color-border)] bg-[var(--color-chip-bg)] px-2.5 py-1 text-[0.66rem] uppercase tracking-[0.08em] text-[var(--color-muted)] transition duration-200 hover:border-[var(--color-accent)] hover:text-[var(--color-fg)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-focus)]/40"
+                    className="font-mono-ui rounded-sm border border-[#6f7c95] bg-[#263347] px-2.5 py-1 text-[0.66rem] uppercase tracking-[0.08em] text-[#d0d7e2] transition duration-200 hover:border-[#9aa7bb] hover:bg-[#31415a] hover:text-[#f1f4f9] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-focus)]/40"
                   >
                     Clear selected tags
                   </button>
@@ -317,7 +322,7 @@ export function RecipeBrowser({
                       <button
                         type="button"
                         onClick={() => onToggleAdvancedTag(tag)}
-                        className="inline-flex items-center rounded-sm border border-[var(--color-accent)] bg-[var(--color-chip-selected-bg)] px-3 py-1.5 font-mono-ui text-[0.72rem] uppercase leading-none tracking-[0.04em] text-[var(--color-chip-selected-text)] transition duration-200 hover:border-[var(--color-accent-hover)] hover:bg-[var(--color-chip-hover-bg)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-focus)]/40"
+                        className="inline-flex items-center rounded-sm border border-[#d69a3a] bg-[#f2e2c6] px-3 py-1.5 font-mono-ui text-[0.72rem] uppercase leading-none tracking-[0.04em] text-[#5f3f1a] transition duration-200 hover:border-[#e0ab55] hover:bg-[#f5e8d1] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-focus)]/40"
                       >
                         #{tag}
                       </button>
@@ -325,12 +330,12 @@ export function RecipeBrowser({
                   ))}
                 </ul>
               ) : (
-                <p className="mt-2 text-xs text-[var(--color-muted)]">No tags selected.</p>
+                <p className="mt-2 text-xs text-[#a9b5c8]">No tags selected.</p>
               )}
             </div>
-            <div className="mt-3 border-t border-[var(--color-border)] pt-3">
+            <div className="mt-3 border-t border-[#3f4d66] pt-3">
               <div className="space-y-1">
-                <h4 className="font-mono-ui text-[0.72rem] uppercase tracking-[0.09em] text-[var(--color-muted)]">
+                <h4 className="font-mono-ui text-[0.72rem] uppercase tracking-[0.09em] text-[#a9b5c8]">
                   Filter tags
                 </h4>
                 <input
@@ -338,7 +343,7 @@ export function RecipeBrowser({
                   onChange={(event) => setTagQuery(event.target.value)}
                   type="search"
                   placeholder="Find tags..."
-                  className="w-52 rounded-sm border border-[var(--color-border)] bg-[var(--color-chip-bg)] px-2.5 py-1.5 text-xs text-[var(--color-fg)] outline-none transition placeholder:text-[var(--color-muted)] focus:border-[var(--color-accent)] focus:ring-2 focus:ring-[var(--color-focus)]/25"
+                  className="w-52 rounded-sm border border-[#d2d7df] bg-[#f1efe8] px-2.5 py-1.5 text-xs text-[var(--color-fg)] outline-none transition placeholder:text-[var(--color-muted)] focus:border-[var(--color-accent)] focus:ring-2 focus:ring-[var(--color-focus)]/25"
                 />
               </div>
               <ul className="mt-2 flex flex-wrap gap-2">
@@ -347,7 +352,7 @@ export function RecipeBrowser({
                     <button
                       type="button"
                       onClick={() => onToggleAdvancedTag(tag)}
-                      className="inline-flex items-center rounded-sm border border-[var(--color-border)] bg-[var(--color-chip-bg)] px-3 py-1.5 font-mono-ui text-[0.72rem] uppercase leading-none tracking-[0.04em] text-[var(--color-muted)] transition duration-200 hover:border-[var(--color-accent)] hover:bg-[var(--color-chip-hover-bg)] hover:text-[var(--color-fg)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-focus)]/40"
+                      className="inline-flex items-center rounded-sm border border-[#6f7c95] bg-transparent px-3 py-1.5 font-mono-ui text-[0.72rem] uppercase leading-none tracking-[0.04em] text-[#d0d7e2] transition duration-200 hover:border-[#9aa7bb] hover:bg-[#2a3850] hover:text-[#f1f4f9] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-focus)]/40"
                     >
                       #{tag}
                     </button>
@@ -355,7 +360,7 @@ export function RecipeBrowser({
                 ))}
               </ul>
               {advancedAvailableTags.length === 0 ? (
-                <p className="mt-2 text-xs text-[var(--color-muted)]">No tags found.</p>
+                <p className="mt-2 text-xs text-[#a9b5c8]">No tags found.</p>
               ) : null}
             </div>
           </div>
