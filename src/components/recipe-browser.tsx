@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import type { RecipeSummary } from "@/types/recipe";
 import { RecipeCard } from "@/components/recipe-card";
@@ -21,6 +21,10 @@ interface RecipeBrowserProps {
 
 type SortMode = "date_desc" | "time_asc";
 
+function getRandomIndex(maxExclusive: number): number {
+  return Math.floor(Math.random() * maxExclusive);
+}
+
 function matchesQuery(recipe: RecipeSummary, query: string): boolean {
   const ingredientTerms = recipe.ingredients.flatMap((ingredient) => [
     ingredient.name,
@@ -37,7 +41,7 @@ function matchesQuery(recipe: RecipeSummary, query: string): boolean {
 function pickRandomTags(items: string[], count: number): string[] {
   const shuffled = [...items];
   for (let index = shuffled.length - 1; index > 0; index -= 1) {
-    const randomIndex = Math.floor(Math.random() * (index + 1));
+    const randomIndex = getRandomIndex(index + 1);
     [shuffled[index], shuffled[randomIndex]] = [shuffled[randomIndex], shuffled[index]];
   }
 
@@ -75,7 +79,17 @@ export function RecipeBrowser({
   const [tagQuery, setTagQuery] = useState("");
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [diceFace, setDiceFace] = useState<number>(5);
+  const [isDiceRolling, setIsDiceRolling] = useState(false);
   const [sortMode, setSortMode] = useState<SortMode>("date_desc");
+  const pendingRandomRecipeTimeout = useRef<number | null>(null);
+
+  useEffect(() => {
+    return () => {
+      if (pendingRandomRecipeTimeout.current !== null) {
+        window.clearTimeout(pendingRandomRecipeTimeout.current);
+      }
+    };
+  }, []);
 
   const filteredSimple = useMemo(() => {
     return recipes.filter((recipe) => {
@@ -136,12 +150,18 @@ export function RecipeBrowser({
   }, [matchingRecipesByTags, recipes, selectedTags, tagQuery]);
 
   const openRandomRecipe = () => {
-    if (sortedFiltered.length === 0) {
+    if (sortedFiltered.length === 0 || isDiceRolling) {
       return;
     }
 
-    const randomIndex = Math.floor(Math.random() * sortedFiltered.length);
-    router.push(`/recipes/${sortedFiltered[randomIndex].slug}`);
+    randomizeDiceFace();
+    setIsDiceRolling(true);
+
+    const randomIndex = getRandomIndex(sortedFiltered.length);
+    const randomSlug = sortedFiltered[randomIndex].slug;
+    pendingRandomRecipeTimeout.current = window.setTimeout(() => {
+      router.push(`/recipes/${randomSlug}`);
+    }, 220);
   };
 
   const onToggleSimpleTag = (tag: string) => {
@@ -172,7 +192,7 @@ export function RecipeBrowser({
     setDiceFace((current) => {
       let next = current;
       while (next === current) {
-        next = Math.floor(Math.random() * 6) + 1;
+        next = getRandomIndex(6) + 1;
       }
       return next;
     });
@@ -221,7 +241,7 @@ export function RecipeBrowser({
               Recipe Search
             </p>
           ) : null}
-          <div className="flex flex-col gap-3 md:flex-row md:items-center">
+          <div className="flex items-center gap-2">
             <input
               value={query}
               onChange={(event) => setQuery(event.target.value)}
@@ -231,7 +251,7 @@ export function RecipeBrowser({
                   ? "Search recipes (title, ingredients, tags)..."
                   : "Search by title, ingredients, or tags..."
               }
-              className="w-full rounded-md border border-[var(--color-border)] bg-[#f1efe8] px-4 py-3 text-sm text-[var(--color-fg)] outline-none transition placeholder:text-[var(--color-muted)] focus:border-[var(--color-accent)] focus:ring-2 focus:ring-[var(--color-focus)]/25"
+              className="min-w-0 flex-1 rounded-md border border-[var(--color-border)] bg-[#f1efe8] px-4 py-3 text-sm text-[var(--color-fg)] outline-none transition placeholder:text-[var(--color-muted)] focus:border-[var(--color-accent)] focus:ring-2 focus:ring-[var(--color-focus)]/25"
             />
             {showRandomButton ? (
               <button
@@ -240,11 +260,14 @@ export function RecipeBrowser({
                 onMouseEnter={randomizeDiceFace}
                 aria-label="Open random recipe"
                 className="group inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-md border border-[var(--color-random-border)] bg-[var(--color-random-bg)] text-[var(--color-random-text)] shadow-[0_2px_8px_rgba(45,26,30,0.1)] transition duration-200 hover:border-[var(--color-random-hover-border)] hover:bg-[var(--color-random-hover-bg)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-focus)]/40"
-                disabled={sortedFiltered.length === 0}
+                disabled={sortedFiltered.length === 0 || isDiceRolling}
               >
                 <svg
                   viewBox="0 0 24 24"
-                  className="h-8 w-8 transition-transform duration-300 group-hover:rotate-[360deg]"
+                  onAnimationEnd={() => setIsDiceRolling(false)}
+                  className={`h-8 w-8 transition-transform duration-300 group-hover:rotate-[360deg] ${
+                    isDiceRolling ? "dice-roll-once" : ""
+                  }`}
                   aria-hidden="true"
                 >
                   <rect
