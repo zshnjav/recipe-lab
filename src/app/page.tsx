@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Suspense } from "react";
 import { RecipeBrowser } from "@/components/recipe-browser";
 import { getRecipeSummaries } from "@/lib/recipes";
 
@@ -26,16 +27,18 @@ export default function Home() {
           </Link>
         </div>
       </section>
-      <RecipeBrowser
-        recipes={recipes}
-        tags={[]}
-        initialCount={6}
-        showRandomButton
-        featuredTagCount={10}
-        browseTagsHref="/recipes"
-        browseActionLabel="Browse recipes"
-        showAllTag={false}
-      />
+      <Suspense fallback={<div className="surface-card h-48 p-4" />}>
+        <RecipeBrowser
+          recipes={recipes}
+          tags={[]}
+          initialCount={6}
+          showRandomButton
+          featuredTagCount={10}
+          browseTagsHref="/recipes"
+          browseActionLabel="Browse recipes"
+          showAllTag={false}
+        />
+      </Suspense>
       <div className="mt-8 text-right">
         <Link
           href="/recipes"

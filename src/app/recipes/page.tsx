@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { RecipeBrowser } from "@/components/recipe-browser";
 import { getAllTags, getRecipeSummaries } from "@/lib/recipes";
 
@@ -18,7 +19,9 @@ export default function RecipesPage() {
           Search recipes directly or build combinations by selecting co-occurring tags.
         </p>
       </header>
-      <RecipeBrowser recipes={recipes} tags={tags} showRandomButton enableAdvancedTagFiltering />
+      <Suspense fallback={<div className="surface-card h-56 p-4" />}>
+        <RecipeBrowser recipes={recipes} tags={tags} showRandomButton enableAdvancedTagFiltering />
+      </Suspense>
     </main>
   );
 }
