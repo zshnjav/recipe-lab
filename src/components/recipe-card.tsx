@@ -16,6 +16,54 @@ interface RecipeCardProps {
   recipe: RecipeSummary;
 }
 
+function KnifeIcon() {
+  return (
+    <svg viewBox="0 0 24 24" className="h-3.5 w-3.5 shrink-0 opacity-70" fill="none" aria-hidden="true">
+      <path d="M5.2 6.8h10.9v10.1H7.1c-1.1 0-1.9-.9-1.9-1.9V6.8Z" stroke="currentColor" strokeWidth="1.1" />
+      <path d="M16.1 9h1.7a1.8 1.8 0 0 1 0 3.6h-1.7" stroke="currentColor" strokeWidth="1.1" />
+      <path
+        d="M8.2 9.2h4.2M8.2 11.4h4.2M8.2 13.6h4.2"
+        stroke="currentColor"
+        strokeWidth="1.1"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
+function FlameIcon() {
+  return (
+    <svg viewBox="0 0 24 24" className="h-3.5 w-3.5 shrink-0 opacity-70" fill="none" aria-hidden="true">
+      <path
+        d="M12 21c3.3 0 6-2.5 6-5.8 0-4.4-4.3-6.3-5.1-10.2-2.6 1.7-1.2 4.3-3.6 6.2-1.4 1.1-3.3 2.4-3.3 4.8C6 18.7 8.7 21 12 21Z"
+        stroke="currentColor"
+        strokeWidth="1.1"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
+function ClockIcon() {
+  return (
+    <svg viewBox="0 0 24 24" className="h-3.5 w-3.5 shrink-0 opacity-70" fill="none" aria-hidden="true">
+      <circle cx="12" cy="12" r="8" stroke="currentColor" strokeWidth="1.1" />
+      <path d="M12 7.8v4.7l3.1 1.8" stroke="currentColor" strokeWidth="1.1" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+function PlateIcon() {
+  return (
+    <svg viewBox="0 0 24 24" className="h-3.5 w-3.5 shrink-0 opacity-70" fill="none" aria-hidden="true">
+      <circle cx="12" cy="12" r="7.8" stroke="currentColor" strokeWidth="1.1" />
+      <circle cx="12" cy="12" r="3.2" stroke="currentColor" strokeWidth="1.1" />
+    </svg>
+  );
+}
+
 export function RecipeCard({ recipe }: RecipeCardProps) {
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -36,10 +84,11 @@ export function RecipeCard({ recipe }: RecipeCardProps) {
   };
 
   return (
-    <article className="surface-card p-5 transition hover:-translate-y-0.5 hover:border-[var(--color-accent)]">
-      <div className="font-mono-ui mb-3 flex items-center justify-between gap-3 text-[0.68rem] uppercase tracking-[0.08em] text-[var(--color-muted)]">
+    <article className="surface-card flex h-full flex-col p-5 transition hover:-translate-y-0.5 hover:border-[var(--color-accent)]">
+      <div className="font-mono-ui mb-3 flex items-center justify-between gap-3 text-[0.72rem] uppercase tracking-[0.08em] text-[var(--color-muted)]">
         <span>{formatDate(recipe.date)}</span>
-        <span>
+        <span className="inline-flex items-center gap-1">
+          <ClockIcon />
           Total <span className="text-[var(--color-accent)]">{recipe.totalMinutes}m</span>
         </span>
       </div>
@@ -49,23 +98,34 @@ export function RecipeCard({ recipe }: RecipeCardProps) {
         </Link>
       </h3>
       <p className="mb-4 text-sm text-[var(--color-muted)]">{recipe.description}</p>
-      <ul className="mb-4 flex flex-wrap gap-2">
-        {recipe.tags.map((tag) => (
-          <li key={tag}>
-            <Link
-              href={pathname === "/recipes" ? buildBrowseTagHref(tag) : `/recipes?tags=${encodeURIComponent(tag)}`}
-              className="inline-flex items-center rounded-sm border border-[var(--color-border)] bg-[var(--color-chip-bg)] px-3 py-1.5 font-mono-ui text-[0.72rem] uppercase leading-none tracking-[0.04em] text-[var(--color-muted)] transition duration-200 hover:border-[var(--color-accent)] hover:bg-[var(--color-chip-hover-bg)] hover:text-[var(--color-fg)]"
-            >
-              #{tag}
-            </Link>
-          </li>
-        ))}
-      </ul>
-      <p className="font-mono-ui text-[0.68rem] uppercase tracking-[0.08em] text-[var(--color-muted)]">
-        Servings <span className="text-[var(--color-accent)]">{recipe.servings}</span> / Prep{" "}
-        <span className="text-[var(--color-accent)]">{recipe.prepMinutes}m</span> / Cook{" "}
-        <span className="text-[var(--color-accent)]">{recipe.cookMinutes}m</span>
-      </p>
+      <div className="mt-auto">
+        <ul className="mb-4 flex flex-wrap gap-2">
+          {recipe.tags.map((tag) => (
+            <li key={tag}>
+              <Link
+                href={pathname === "/recipes" ? buildBrowseTagHref(tag) : `/recipes?tags=${encodeURIComponent(tag)}`}
+                className="inline-flex items-center rounded-sm border border-[var(--color-border)] bg-[var(--color-chip-bg)] px-3 py-1.5 font-mono-ui text-[0.72rem] uppercase leading-none tracking-[0.04em] text-[var(--color-muted)] transition duration-200 hover:border-[var(--color-accent)] hover:bg-[var(--color-chip-hover-bg)] hover:text-[var(--color-fg)]"
+              >
+                #{tag}
+              </Link>
+            </li>
+          ))}
+        </ul>
+        <p className="font-mono-ui flex flex-wrap items-center gap-x-4 gap-y-1 text-[0.72rem] uppercase tracking-[0.08em] text-[var(--color-muted)]">
+          <span className="inline-flex items-center gap-1">
+            <PlateIcon />
+            Servings <span className="text-[var(--color-accent)]">{recipe.servings}</span>
+          </span>
+          <span className="inline-flex items-center gap-1">
+            <KnifeIcon />
+            Prep <span className="text-[var(--color-accent)]">{recipe.prepMinutes}m</span>
+          </span>
+          <span className="inline-flex items-center gap-1">
+            <FlameIcon />
+            Cook <span className="text-[var(--color-accent)]">{recipe.cookMinutes}m</span>
+          </span>
+        </p>
+      </div>
     </article>
   );
 }
