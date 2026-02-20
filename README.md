@@ -1,36 +1,158 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Recipe Lab
 
-## Getting Started
+Personal recipe blog built with Next.js, TypeScript, and Tailwind CSS.
 
-First, run the development server:
+The site is static-first and markdown-driven: recipes live in `content/recipes/*.md`.
+
+## Beginner Notes
+
+- You do not need to know React deeply to add recipes. Most of your work is just editing markdown files.
+- Think of `content/recipes` as your "database". Every `.md` file there becomes a real recipe page.
+- `frontmatter` means the YAML block between `---` lines at the top of each recipe.
+- If the site does not load, run `npm run lint` first to catch formatting/schema mistakes quickly.
+- Keep slug filenames simple and lowercase (example: `beef-fried-rice.md`).
+- When in doubt, copy `content/templates/recipe-template.md` and only replace values.
+
+## Stack
+
+- Next.js (App Router)
+- TypeScript
+- Tailwind CSS
+- Deployed on Vercel via GitHub
+
+## Current Features
+
+- Home page with:
+  - search across title, tags, and ingredients
+  - random recipe button
+  - 6 random tag pills + `Browse by tags`
+  - recent recipe cards
+- `/recipes` archive page with search + tag filters
+- `/recipes/[slug]` detail page with:
+  - structured ingredients panel
+  - servings scaler
+  - shopping list copy
+  - method sections (`Prep (Mise-en-Place)` + `Execution`)
+  - related recipes
+- `/tags` index page
+- `/tags/[tag]` filtered tag page
+- Automatic `quick` tag when `totalMinutes <= 30`
+
+## Recipe Content Model
+
+Each recipe file uses frontmatter + markdown body.
+
+Frontmatter = metadata used by the app for cards, tags, filtering, and timings.
+
+Required frontmatter fields:
+
+- `title: string`
+- `date: YYYY-MM-DD`
+- `description: string`
+- `tags: string[]`
+- `prepMinutes: number`
+- `cookMinutes: number`
+- `totalMinutes: number`
+- `servings: number`
+- `ingredients: RecipeIngredient[]`
+
+Ingredient shape:
+
+```yaml
+ingredients:
+  - name: all-purpose flour
+    amount:
+      value: 2
+      unit: cups
+    grams: 240
+  - name: eggs
+    amount:
+      value: 2
+      unit: whole
+```
+
+Notes:
+
+- Each ingredient needs at least one measurement (`amount` or `grams`).
+- If both are provided, both are shown and scaled.
+- Common units scale using kitchen-style fractions.
+- Grams scale and display as whole numbers.
+- `quick` is added automatically if `totalMinutes` is 30 or less.
+
+## Method Body Format
+
+Use this structure in the markdown body:
+
+```md
+## Prep (Mise-en-Place)
+1. ...
+
+## Execution
+1. ...
+```
+
+Legacy method markdown still renders, but new recipes should follow this structure.
+
+Plain-English meaning:
+
+- `Prep (Mise-en-Place)` = all setup work before heat (chopping, mixing, measuring).
+- `Execution` = actual cooking steps.
+
+## Adding a New Recipe (Low-Friction Workflow)
+
+1. Copy `content/templates/recipe-template.md`
+2. Fill in frontmatter and method sections
+3. Save as `content/recipes/<slug>.md`
+4. Run `npm run dev` and verify at `/recipes/<slug>`
+
+Detailed authoring instructions:
+
+- `content/templates/README.md`
+
+## Adding Images
+
+Store images under:
+
+- `public/recipes/<slug>/...`
+
+Reference in markdown:
+
+```md
+![Alt text](/recipes/<slug>/step-1.jpg)
+```
+
+Beginner tip:
+
+- The file path in markdown must match the real file path exactly.
+- Good pattern: folder name and markdown slug should be identical.
+
+## Scripts
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm run build
+npm run start
+npm run lint
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+What these do:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- `npm run dev`: starts local development server (usually `http://localhost:3000`).
+- `npm run build`: checks production build.
+- `npm run start`: runs production build locally after building.
+- `npm run lint`: catches code/style issues early.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Project Structure
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```text
+content/
+  recipes/
+  templates/
+public/
+  recipes/
+src/
+  app/
+  components/
+  lib/
+  types/
+```
