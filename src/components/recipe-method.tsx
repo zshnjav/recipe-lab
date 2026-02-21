@@ -54,8 +54,8 @@ function extractMethodSections(body: string): {
   usedFallback: boolean;
 } {
   const lines = body.split(/\r?\n/).map((line) => line.trim());
-  const prepHeader = /^##\s+prep\s+\(mise-en-place\)\s*$/i;
-  const executionHeader = /^##\s+execution\s*$/i;
+  const prepHeader = /^##\s+prep(\s+\(mise-en-place\)|\s*\/\/\s*mise\s+en\s+place)\s*$/i;
+  const executionHeader = /^##\s+execution(\s*\/\/\s*active\s+cooking)?\s*$/i;
 
   const prepIndex = lines.findIndex((line) => prepHeader.test(line));
   const executionIndex = lines.findIndex((line) => executionHeader.test(line));
@@ -151,14 +151,14 @@ export function RecipeMethod({ body }: RecipeMethodProps) {
 
   if (usedFallback && process.env.NODE_ENV !== "production") {
     console.warn(
-      'Recipe method is missing "## Prep (Mise-en-Place)" and "## Execution" headings. Rendering legacy fallback.',
+      'Recipe method is missing expected prep/execution headings. Rendering legacy fallback.',
     );
   }
 
   return (
     <section className="space-y-6">
-      <MethodSection title="Prep (Mise-en-Place)" lines={prep} />
-      <MethodSection title="Execution" lines={execution} />
+      <MethodSection title="Prep // Mise en Place" lines={prep} />
+      <MethodSection title="Execution // Active Cooking" lines={execution} />
     </section>
   );
 }
