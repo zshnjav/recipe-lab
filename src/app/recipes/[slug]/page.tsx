@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { RecipeIngredientsPanel } from "@/components/recipe-ingredients-panel";
 import { RecipeMethod } from "@/components/recipe-method";
+import { RecipeSpecPanel } from "@/components/recipe-spec-panel";
 import { getRecipeBySlug, getRecipeSlugs } from "@/lib/recipes";
 
 interface RecipePageProps {
@@ -59,32 +60,12 @@ export default async function RecipePage({ params }: RecipePageProps) {
             {formatDate(recipe.date)}
           </p>
           <p className="mt-4 text-sm leading-7 text-[var(--color-muted)]">{recipe.description}</p>
-          <div className="console-panel mt-5 overflow-hidden">
-            <dl className="font-mono-ui grid grid-cols-2 gap-px bg-[var(--color-panel-text)]/10 text-xs uppercase tracking-[0.08em] text-[var(--color-panel-text)]">
-              <div className="bg-[var(--color-panel)] px-3 py-3">
-                <dt className="text-[var(--color-panel-text)]/65">Servings</dt>
-                <dd className="mt-1 text-sm font-semibold text-[var(--color-accent)]">{recipe.servings}</dd>
-              </div>
-              <div className="bg-[var(--color-panel)] px-3 py-3">
-                <dt className="text-[var(--color-panel-text)]/65">Prep</dt>
-                <dd className="mt-1 text-sm font-semibold text-[var(--color-accent)]">
-                  {recipe.prepMinutes}m
-                </dd>
-              </div>
-              <div className="bg-[var(--color-panel)] px-3 py-3">
-                <dt className="text-[var(--color-panel-text)]/65">Cook</dt>
-                <dd className="mt-1 text-sm font-semibold text-[var(--color-accent)]">
-                  {recipe.cookMinutes}m
-                </dd>
-              </div>
-              <div className="bg-[var(--color-panel)] px-3 py-3">
-                <dt className="text-[var(--color-panel-text)]/65">Total</dt>
-                <dd className="mt-1 text-sm font-semibold text-[var(--color-accent)]">
-                  {recipe.totalMinutes}m
-                </dd>
-              </div>
-            </dl>
-          </div>
+          <RecipeSpecPanel
+            servings={recipe.servings}
+            prepMinutes={recipe.prepMinutes}
+            cookMinutes={recipe.cookMinutes}
+            totalMinutes={recipe.totalMinutes}
+          />
           <RecipeIngredientsPanel
             ingredients={recipe.ingredients}
             baseServings={recipe.servings}

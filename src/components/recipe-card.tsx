@@ -1,7 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname, useSearchParams } from "next/navigation";
+import { useEffect, useRef, useState } from "react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import type { RecipeSummary } from "@/types/recipe";
 
 function formatDate(date: string): string {
@@ -15,6 +16,8 @@ function formatDate(date: string): string {
 interface RecipeCardProps {
   recipe: RecipeSummary;
 }
+
+const CARD_ACQUIRE_DELAY_MS = 120;
 
 function KnifeIcon() {
   return (
@@ -72,8 +75,19 @@ function PlateIcon() {
 }
 
 export function RecipeCard({ recipe }: RecipeCardProps) {
+  const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
+  const [isAcquired, setIsAcquired] = useState(false);
+  const pendingNavigationTimeout = useRef<number | null>(null);
+
+  useEffect(() => {
+    return () => {
+      if (pendingNavigationTimeout.current !== null) {
+        window.clearTimeout(pendingNavigationTimeout.current);
+      }
+    };
+  }, []);
 
   const buildBrowseTagHref = (tag: string): string => {
     const params = new URLSearchParams(searchParams.toString());
@@ -90,8 +104,26 @@ export function RecipeCard({ recipe }: RecipeCardProps) {
     return `/recipes?${params.toString()}`;
   };
 
+  const navigateWithAcquire = (href: string) => {
+    if (pendingNavigationTimeout.current !== null) {
+      window.clearTimeout(pendingNavigationTimeout.current);
+      pendingNavigationTimeout.current = null;
+    }
+
+    setIsAcquired(true);
+    pendingNavigationTimeout.current = window.setTimeout(() => {
+      router.push(href);
+    }, CARD_ACQUIRE_DELAY_MS);
+  };
+
   return (
-    <article className="surface-card flex h-full flex-col p-5 transition hover:-translate-y-0.5 hover:border-[var(--color-accent)]">
+    <article
+      className={`surface-card card-acquire-container flex h-full flex-col p-5 transition hover:-translate-y-0.5 hover:border-[var(--color-accent)] focus-within:-translate-y-0.5 focus-within:border-[var(--color-accent)] ${
+        isAcquired ? "card-acquire" : ""
+      }`}
+      onMouseEnter={() => setIsAcquired(true)}
+      onMouseLeave={() => setIsAcquired(false)}
+    >
       <div className="font-mono-ui mb-3 flex items-center justify-between gap-3 text-[0.72rem] uppercase tracking-[0.08em] text-[var(--color-muted)]">
         <span>{formatDate(recipe.date)}</span>
         <span className="inline-flex items-center gap-1">
@@ -100,7 +132,16 @@ export function RecipeCard({ recipe }: RecipeCardProps) {
         </span>
       </div>
       <h3 className="mb-2 text-xl font-semibold tracking-tight text-[var(--color-fg)]">
-        <Link href={`/recipes/${recipe.slug}`} className="hover:text-[var(--color-accent-hover)]">
+        <Link
+          href={`/recipes/${recipe.slug}`}
+          onClick={(event) => {
+            event.preventDefault();
+            navigateWithAcquire(`/recipes/${recipe.slug}`);
+          }}
+          onFocus={() => setIsAcquired(true)}
+          onBlur={() => setIsAcquired(false)}
+          className="hover:text-[var(--color-accent-hover)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-focus)]/40"
+        >
           {recipe.title}
         </Link>
       </h3>
