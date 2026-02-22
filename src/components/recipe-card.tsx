@@ -36,7 +36,14 @@ function FlameIcon() {
   return (
     <svg viewBox="0 0 24 24" className="h-3.5 w-3.5 shrink-0 opacity-70" fill="none" aria-hidden="true">
       <path
-        d="M12 21c3.3 0 6-2.5 6-5.8 0-4.4-4.3-6.3-5.1-10.2-2.6 1.7-1.2 4.3-3.6 6.2-1.4 1.1-3.3 2.4-3.3 4.8C6 18.7 8.7 21 12 21Z"
+        d="M12 21c-3.5 0-6.4-2.7-6.4-6.1 0-3 2.1-4.7 3.8-6.1 1.2-1 2.3-1.9 2.7-3.3 2.8 2 5.9 4.6 5.9 9.1 0 3.4-2.8 6.4-6 6.4Z"
+        stroke="currentColor"
+        strokeWidth="1.1"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M12 18.6c-1.7 0-3.1-1.2-3.1-2.9 0-1.4 1-2.3 2-3.2.6-.5 1.1-1 1.4-1.7 1.3 1 2.8 2.3 2.8 4.4 0 1.8-1.4 3.4-3.1 3.4Z"
         stroke="currentColor"
         strokeWidth="1.1"
         strokeLinecap="round"

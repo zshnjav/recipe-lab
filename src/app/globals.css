@@ -35,18 +35,18 @@
 body {
   background-color: var(--color-bg);
   background-image:
-    radial-gradient(circle at 1px 1px, rgba(30, 37, 48, 0.05) 0.6px, transparent 0.7px),
+    radial-gradient(circle at 1px 1px, rgba(30, 37, 48, 0.07) 0.6px, transparent 0.7px),
     repeating-linear-gradient(
       0deg,
       transparent,
       transparent 27px,
-      rgba(30, 37, 48, 0.045) 28px
+      rgba(30, 37, 48, 0.06) 28px
     ),
     repeating-linear-gradient(
       90deg,
       transparent,
       transparent 27px,
-      rgba(30, 37, 48, 0.045) 28px
+      rgba(30, 37, 48, 0.06) 28px
     );
   background-size:
     12px 12px,
