@@ -16,7 +16,7 @@ cookMinutes: 10
 
 totalMinutes: 20
 
-servings: 0
+servings: 2
 
 ingredients:
 
