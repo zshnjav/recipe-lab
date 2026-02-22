@@ -108,7 +108,6 @@ ingredients:
 5. Stir in ditalini pasta. Simmer 8–10 minutes until tender. Add splash of water/broth if too thick.
 6. Taste and adjust seasoning. Turn off heat. Top with fresh basil and parmesan if desired.
 
-![Recipe image alt text](/recipes/your-slug/step-1.jpg)
 
 Notes:
 - Thickens as it sits; loosen with extra broth when reheating.

@@ -1,22 +1,131 @@
 @import "tailwindcss";
 
 :root {
-  --background: #f8f5ef;
-  --foreground: #1f2937;
+  --color-bg: #f4f1ea;
+  --color-fg: #1e2530;
+  --color-panel: #202c3d;
+  --color-panel-text: #f4f6fb;
+  --color-border: #c9ced8;
+  --color-muted: #5f6b7b;
+  --color-accent: #d69a3a;
+  --color-accent-hover: #bf8121;
+  --color-focus: #e1b469;
+  --color-chip-bg: #f2f0ea;
+  --color-chip-hover-bg: #eee6d7;
+  --color-chip-selected-bg: #e8d7bc;
+  --color-chip-selected-text: #5f3f1a;
+  --color-browse-bg: #e8edf4;
+  --color-browse-hover-bg: #dde5ef;
+  --color-random-bg: #f0d8d7;
+  --color-random-border: #be8582;
+  --color-random-text: #7f2928;
+  --color-random-hover-bg: #ebc9c7;
+  --color-random-hover-border: #a95c59;
+  --radius-sm: 0.4rem;
+  --radius-md: 0.55rem;
+  --shadow-soft: 0 3px 12px rgba(19, 26, 36, 0.07);
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-instrument);
+  --color-background: var(--color-bg);
+  --color-foreground: var(--color-fg);
+  --font-sans: var(--font-body);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: var(--font-instrument), "Segoe UI", sans-serif;
+  background-color: var(--color-bg);
+  background-image:
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 27px,
+      rgba(30, 37, 48, 0.06) 28px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 27px,
+      rgba(30, 37, 48, 0.06) 28px
+    );
+  background-size:
+    28px 28px,
+    28px 28px;
+  background-attachment:
+    fixed,
+    fixed;
+  color: var(--color-fg);
+  font-family: var(--font-body), "Segoe UI", sans-serif;
+  line-height: 1.55;
 }
 
-.font-heading {
-  font-family: var(--font-fraunces), "Times New Roman", serif;
+h1,
+h2,
+h3,
+h4 {
+  letter-spacing: -0.01em;
+}
+
+.font-mono-ui {
+  font-family: var(--font-mono-ui), "Consolas", monospace;
+}
+
+.console-panel {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: linear-gradient(155deg, #243247 0%, #1f2b3d 52%, #1c2737 100%);
+  color: var(--color-panel-text);
+  box-shadow: var(--shadow-soft);
+}
+
+.surface-card {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: #fbfaf6;
+  box-shadow: var(--shadow-soft);
+}
+
+.chip {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: #f8f5ee;
+  color: var(--color-muted);
+  font-family: var(--font-mono-ui), "Consolas", monospace;
+  font-size: 0.72rem;
+  line-height: 1;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.chip-active {
+  border-color: var(--color-accent);
+  background: #f2e5d1;
+  color: #66411b;
+}
+
+@keyframes chip-fly-in {
+  from {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.chip-fly-in {
+  animation: chip-fly-in 180ms ease;
+}
+
+@keyframes dice-click-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.dice-click-spin {
+  animation: dice-click-spin 300ms ease;
 }

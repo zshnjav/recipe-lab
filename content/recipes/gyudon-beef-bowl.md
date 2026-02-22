@@ -85,7 +85,6 @@ ingredients:
 4. Add the 1 lb (454 g) sliced beef to the simmering liquid. Use chopsticks to separate the slices immediately. Simmer gently for 2 to 3 minutes. As soon as the beef is no longer pink, turn off the heat.
 5. Spoon the beef, onions, and sauce over the 4 cups (600 g) of rice. Top with scallions, pickled ginger, or an egg.
 
-![Gyudon bowl](/recipes/gyudon-beef-bowl/step-1.jpg)
 
 Notes:
 - Since we are swapping sake for sweet Mirin, we are omitting the extra sugar entirely.

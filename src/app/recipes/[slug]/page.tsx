@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { RecipeIngredientsPanel } from "@/components/recipe-ingredients-panel";
 import { RecipeMethod } from "@/components/recipe-method";
-import { getAllRecipes, getRecipeBySlug, getRecipeSlugs } from "@/lib/recipes";
+import { getRecipeBySlug, getRecipeSlugs } from "@/lib/recipes";
 
 interface RecipePageProps {
   params: Promise<{ slug: string }>;
@@ -44,45 +44,63 @@ export default async function RecipePage({ params }: RecipePageProps) {
     notFound();
   }
 
-  const related = getAllRecipes()
-    .filter((item) => item.slug !== recipe.slug && item.tags.some((tag) => recipe.tags.includes(tag)))
-    .slice(0, 3);
-
   return (
     <main className="mx-auto min-h-screen w-full max-w-6xl px-4 py-10 md:px-8">
-      <Link href="/recipes" className="text-sm font-medium text-amber-800 hover:text-amber-900">
+      <Link
+        href="/recipes"
+        className="font-mono-ui text-xs uppercase tracking-[0.09em] text-[var(--color-muted)] hover:text-[var(--color-fg)]"
+      >
         Back to all recipes
       </Link>
       <article className="mt-4 grid gap-8 lg:grid-cols-[420px_1fr]">
-        <aside className="h-fit rounded-2xl border border-stone-200 bg-white p-5 shadow-sm">
-          <h1 className="text-3xl font-semibold tracking-tight text-stone-900">{recipe.title}</h1>
-          <p className="mt-2 text-sm text-stone-600">{formatDate(recipe.date)}</p>
-          <p className="mt-4 text-sm leading-7 text-stone-700">{recipe.description}</p>
-          <dl className="mt-5 space-y-2 text-sm text-stone-700">
-            <div className="flex justify-between gap-4">
-              <dt>Prep</dt>
-              <dd>{recipe.prepMinutes} min</dd>
-            </div>
-            <div className="flex justify-between gap-4">
-              <dt>Cook</dt>
-              <dd>{recipe.cookMinutes} min</dd>
-            </div>
-            <div className="flex justify-between gap-4">
-              <dt>Total</dt>
-              <dd>{recipe.totalMinutes} min</dd>
-            </div>
-            <div className="flex justify-between gap-4">
-              <dt>Servings</dt>
-              <dd>{recipe.servings} base</dd>
-            </div>
-          </dl>
-          <RecipeIngredientsPanel ingredients={recipe.ingredients} baseServings={recipe.servings} />
+        <aside className="surface-card h-fit p-5">
+          <h1 className="text-3xl font-semibold tracking-tight text-[var(--color-fg)]">{recipe.title}</h1>
+          <p className="font-mono-ui mt-2 text-xs uppercase tracking-[0.09em] text-[var(--color-muted)]">
+            {formatDate(recipe.date)}
+          </p>
+          <p className="mt-4 text-sm leading-7 text-[var(--color-muted)]">{recipe.description}</p>
+          <div className="console-panel mt-5 overflow-hidden">
+            <dl className="font-mono-ui grid grid-cols-2 gap-px bg-[var(--color-panel-text)]/10 text-xs uppercase tracking-[0.08em] text-[var(--color-panel-text)]">
+              <div className="bg-[var(--color-panel)] px-3 py-3">
+                <dt className="text-[var(--color-panel-text)]/65">Servings</dt>
+                <dd className="mt-1 text-sm font-semibold text-[var(--color-accent)]">{recipe.servings}</dd>
+              </div>
+              <div className="bg-[var(--color-panel)] px-3 py-3">
+                <dt className="text-[var(--color-panel-text)]/65">Prep</dt>
+                <dd className="mt-1 text-sm font-semibold text-[var(--color-accent)]">
+                  {recipe.prepMinutes}m
+                </dd>
+              </div>
+              <div className="bg-[var(--color-panel)] px-3 py-3">
+                <dt className="text-[var(--color-panel-text)]/65">Cook</dt>
+                <dd className="mt-1 text-sm font-semibold text-[var(--color-accent)]">
+                  {recipe.cookMinutes}m
+                </dd>
+              </div>
+              <div className="bg-[var(--color-panel)] px-3 py-3">
+                <dt className="text-[var(--color-panel-text)]/65">Total</dt>
+                <dd className="mt-1 text-sm font-semibold text-[var(--color-accent)]">
+                  {recipe.totalMinutes}m
+                </dd>
+              </div>
+            </dl>
+          </div>
+          <RecipeIngredientsPanel
+            ingredients={recipe.ingredients}
+            baseServings={recipe.servings}
+            recipeTitle={recipe.title}
+            recipeDescription={recipe.description}
+            prepMinutes={recipe.prepMinutes}
+            cookMinutes={recipe.cookMinutes}
+            totalMinutes={recipe.totalMinutes}
+            methodBody={recipe.body}
+          />
           <ul className="mt-5 flex flex-wrap gap-2">
             {recipe.tags.map((tag) => (
               <li key={tag}>
                 <Link
-                  href={`/tags/${encodeURIComponent(tag)}`}
-                  className="inline-flex rounded-full border border-amber-200 bg-amber-50 px-3 py-1 text-xs font-semibold text-amber-900 hover:bg-amber-100"
+                  href={`/recipes?tags=${encodeURIComponent(tag)}`}
+                  className="inline-flex items-center rounded-sm border border-[var(--color-border)] bg-[var(--color-chip-bg)] px-3 py-1.5 font-mono-ui text-[0.72rem] uppercase leading-none tracking-[0.04em] text-[var(--color-muted)] transition duration-200 hover:border-[var(--color-accent)] hover:bg-[var(--color-chip-hover-bg)] hover:text-[var(--color-fg)]"
                 >
                   #{tag}
                 </Link>
@@ -92,26 +110,9 @@ export default async function RecipePage({ params }: RecipePageProps) {
         </aside>
 
         <section className="space-y-8">
-          <div className="rounded-2xl border border-stone-200 bg-stone-50 p-6">
+          <div className="surface-card bg-[#f6f3ec] p-6">
             <RecipeMethod body={recipe.body} />
           </div>
-          {related.length > 0 ? (
-            <div>
-              <h2 className="mb-3 text-xl font-semibold text-stone-900">Related recipes</h2>
-              <ul className="space-y-2">
-                {related.map((item) => (
-                  <li key={item.slug}>
-                    <Link
-                      href={`/recipes/${item.slug}`}
-                      className="text-sm font-medium text-stone-800 hover:text-amber-800"
-                    >
-                      {item.title}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ) : null}
         </section>
       </article>
     </main>

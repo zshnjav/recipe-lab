@@ -6,6 +6,12 @@ import type { RecipeIngredient } from "@/types/recipe";
 interface RecipeIngredientsPanelProps {
   ingredients: RecipeIngredient[];
   baseServings: number;
+  recipeTitle: string;
+  recipeDescription: string;
+  prepMinutes: number;
+  cookMinutes: number;
+  totalMinutes: number;
+  methodBody: string;
 }
 
 function formatKitchenFraction(value: number): string {
@@ -44,7 +50,9 @@ function formatMeasurement(
       ? `${formatKitchenFraction(ingredient.amount.value * multiplier)} ${ingredient.amount.unit}`
       : undefined;
   const grams =
-    ingredient.grams !== undefined ? `${Math.round(ingredient.grams * multiplier)} g` : undefined;
+    ingredient.grams !== undefined && ingredient.grams > 0
+      ? `${Math.round(ingredient.grams * multiplier)} g`
+      : undefined;
 
   return { common, grams };
 }
@@ -80,9 +88,17 @@ async function copyTextToClipboard(text: string): Promise<boolean> {
   return false;
 }
 
-export function RecipeIngredientsPanel({ ingredients, baseServings }: RecipeIngredientsPanelProps) {
+export function RecipeIngredientsPanel({
+  ingredients,
+  baseServings,
+  recipeTitle,
+  recipeDescription,
+  prepMinutes,
+  cookMinutes,
+  totalMinutes,
+  methodBody,
+}: RecipeIngredientsPanelProps) {
   const [servings, setServings] = useState(baseServings);
-  const [selected, setSelected] = useState<Set<number>>(new Set(ingredients.map((_, index) => index)));
   const [copyStatus, setCopyStatus] = useState<string>("");
 
   const multiplier = servings / baseServings;
@@ -91,49 +107,65 @@ export function RecipeIngredientsPanel({ ingredients, baseServings }: RecipeIngr
     [ingredients, multiplier],
   );
 
-  const toggleSelection = (index: number) => {
-    setSelected((current) => {
-      const updated = new Set(current);
-      if (updated.has(index)) {
-        updated.delete(index);
-      } else {
-        updated.add(index);
-      }
-      return updated;
-    });
-  };
-
-  const copySelected = async () => {
-    const lines = scaledLines.filter((_, index) => selected.has(index));
-    if (lines.length === 0) {
-      setCopyStatus("Select at least one ingredient.");
+  const copyList = async () => {
+    if (scaledLines.length === 0) {
+      setCopyStatus("No ingredients to copy.");
       return;
     }
 
-    const didCopy = await copyTextToClipboard(lines.join("\n"));
+    const shoppingListText = `${recipeTitle}\n${scaledLines.join("\n")}`;
+    const didCopy = await copyTextToClipboard(shoppingListText);
     setCopyStatus(didCopy ? "Shopping list copied." : "Clipboard unavailable in this browser.");
+  };
+
+  const copyFullRecipe = async () => {
+    if (scaledLines.length === 0) {
+      setCopyStatus("No recipe data to copy.");
+      return;
+    }
+
+    const fullRecipeText = [
+      recipeTitle,
+      recipeDescription,
+      "",
+      `Prep: ${prepMinutes}m`,
+      `Cook: ${cookMinutes}m`,
+      `Total: ${totalMinutes}m`,
+      `Servings: ${servings}`,
+      "",
+      "Ingredients",
+      ...scaledLines.map((line) => `- ${line}`),
+      "",
+      "Method",
+      methodBody.trim(),
+    ].join("\n");
+
+    const didCopy = await copyTextToClipboard(fullRecipeText);
+    setCopyStatus(didCopy ? "Full recipe copied." : "Clipboard unavailable in this browser.");
   };
 
   return (
     <section className="mt-6">
-      <div className="rounded-xl border border-stone-200 bg-stone-50 p-4">
+      <div className="rounded-md border border-[var(--color-border)] bg-[#f0ede6] p-4">
         <div className="flex flex-wrap items-center justify-between gap-3">
-          <h2 className="text-lg font-semibold text-stone-900">Ingredients</h2>
+          <h2 className="font-mono-ui text-xs font-medium uppercase tracking-[0.1em] text-[var(--color-muted)]">
+            Ingredients
+          </h2>
           <div className="flex items-center gap-2">
             <button
               type="button"
               onClick={() => setServings((value) => Math.max(1, value - 1))}
-              className="h-8 w-8 rounded-lg border border-stone-300 bg-white text-sm font-semibold text-stone-800 hover:bg-stone-100"
+              className="h-8 w-8 rounded-sm border border-[var(--color-border)] bg-[#f8f5ee] text-sm font-semibold text-[var(--color-fg)] hover:border-[var(--color-accent)]"
             >
               -
             </button>
-            <span className="min-w-24 text-center text-sm font-medium text-stone-700">
+            <span className="font-mono-ui min-w-24 text-center text-xs uppercase tracking-[0.08em] text-[var(--color-muted)]">
               {servings} servings
             </span>
             <button
               type="button"
               onClick={() => setServings((value) => value + 1)}
-              className="h-8 w-8 rounded-lg border border-stone-300 bg-white text-sm font-semibold text-stone-800 hover:bg-stone-100"
+              className="h-8 w-8 rounded-sm border border-[var(--color-border)] bg-[#f8f5ee] text-sm font-semibold text-[var(--color-fg)] hover:border-[var(--color-accent)]"
             >
               +
             </button>
@@ -144,25 +176,17 @@ export function RecipeIngredientsPanel({ ingredients, baseServings }: RecipeIngr
           {ingredients.map((ingredient, index) => {
             const measurement = formatMeasurement(ingredient, multiplier);
             return (
-              <label
+              <div
                 key={`${ingredient.name}-${index}`}
-                className="flex items-start gap-3 rounded-lg border border-stone-200 bg-white p-2.5"
+                className="flex items-start justify-between gap-3 rounded-sm border border-[var(--color-border)] bg-[#fbfaf6] px-3 py-2.5"
               >
-                <input
-                  type="checkbox"
-                  checked={selected.has(index)}
-                  onChange={() => toggleSelection(index)}
-                  className="mt-1 h-4 w-4 accent-amber-600"
-                />
-                <div className="flex w-full flex-wrap items-start justify-between gap-2">
-                  <span className="text-sm text-stone-800">{ingredient.name}</span>
-                  <span className="text-sm font-medium text-stone-700">
-                    {measurement.common && measurement.grams
-                      ? `${measurement.common} (${measurement.grams})`
-                      : measurement.common ?? measurement.grams}
-                  </span>
-                </div>
-              </label>
+                <span className="text-sm text-[var(--color-fg)]">{ingredient.name}</span>
+                <span className="font-mono-ui text-[0.72rem] uppercase tracking-[0.08em] text-[var(--color-muted)]">
+                  {measurement.common && measurement.grams
+                    ? `${measurement.common} (${measurement.grams})`
+                    : measurement.common ?? measurement.grams}
+                </span>
+              </div>
             );
           })}
         </div>
@@ -170,13 +194,24 @@ export function RecipeIngredientsPanel({ ingredients, baseServings }: RecipeIngr
         <div className="mt-4 flex flex-wrap items-center gap-2">
           <button
             type="button"
-            onClick={copySelected}
-            className="rounded-lg bg-stone-900 px-3 py-2 text-xs font-semibold text-white hover:bg-stone-800"
+            onClick={copyList}
+            className="font-mono-ui rounded-sm border border-[var(--color-panel)] bg-[var(--color-panel)] px-3 py-2 text-xs font-medium uppercase tracking-[0.08em] text-[var(--color-panel-text)] hover:border-[var(--color-accent)] hover:text-[var(--color-accent)]"
           >
             Copy shopping list
           </button>
-          {copyStatus ? <span className="text-xs text-stone-600">{copyStatus}</span> : null}
+          <button
+            type="button"
+            onClick={copyFullRecipe}
+            className="font-mono-ui ml-auto rounded-sm border border-[var(--color-border)] bg-[#f8f5ee] px-3 py-2 text-xs font-medium uppercase tracking-[0.08em] text-[var(--color-fg)] hover:border-[var(--color-accent)] hover:text-[var(--color-accent-hover)]"
+          >
+            Copy full recipe
+          </button>
         </div>
+        {copyStatus ? (
+          <p className="font-mono-ui mt-2 text-[0.68rem] uppercase tracking-[0.08em] text-[var(--color-muted)]">
+            {copyStatus}
+          </p>
+        ) : null}
       </div>
     </section>
   );
