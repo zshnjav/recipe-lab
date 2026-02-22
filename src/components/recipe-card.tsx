@@ -19,10 +19,10 @@ interface RecipeCardProps {
 function KnifeIcon() {
   return (
     <svg viewBox="0 0 24 24" className="h-3.5 w-3.5 shrink-0 opacity-70" fill="none" aria-hidden="true">
-      <path d="M5.2 6.8h10.9v10.1H7.1c-1.1 0-1.9-.9-1.9-1.9V6.8Z" stroke="currentColor" strokeWidth="1.1" />
-      <path d="M16.1 9h1.7a1.8 1.8 0 0 1 0 3.6h-1.7" stroke="currentColor" strokeWidth="1.1" />
+      <path d="M4.6 5.9h12.2v11.3H6.7c-1.2 0-2.1-.9-2.1-2.1V5.9Z" stroke="currentColor" strokeWidth="1.1" />
+      <path d="M16.8 8.4h2a2.1 2.1 0 0 1 0 4.2h-2" stroke="currentColor" strokeWidth="1.1" />
       <path
-        d="M8.2 9.2h4.2M8.2 11.4h4.2M8.2 13.6h4.2"
+        d="M7.7 8.8h5.1M7.7 11.2h5.1M7.7 13.6h5.1"
         stroke="currentColor"
         strokeWidth="1.1"
         strokeLinecap="round"
