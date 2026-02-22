@@ -35,7 +35,6 @@
 body {
   background-color: var(--color-bg);
   background-image:
-    radial-gradient(circle at 1px 1px, rgba(30, 37, 48, 0.07) 0.6px, transparent 0.7px),
     repeating-linear-gradient(
       0deg,
       transparent,
@@ -49,11 +48,9 @@ body {
       rgba(30, 37, 48, 0.06) 28px
     );
   background-size:
-    12px 12px,
     28px 28px,
     28px 28px;
   background-attachment:
-    fixed,
     fixed,
     fixed;
   color: var(--color-fg);
