@@ -2,13 +2,13 @@
 
 title: "Pancakes (Hungry Jack Buttermilk)"
 
-date: YYYY-MM-DD
+date: 2026-02-22
 
-description: ""
+description: "description: "Buttermilk pancakes made from Hungry Jack Buttermilk Complete Pancake & Waffle Mix with a measured water ratio, gentle mixing, and a 10-minute rest for fluffier results.""
 
 tags:
 
-  - ""
+  - "Breakfast"
 
 prepMinutes: 10
 
