@@ -1,6 +1,6 @@
 ---
 
-title: ""
+title: "Pancakes (Hungry Jack Buttermilk)"
 
 date: YYYY-MM-DD
 
