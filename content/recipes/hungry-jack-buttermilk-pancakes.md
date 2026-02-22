@@ -69,8 +69,9 @@ ingredients:
 
 
 1. Weigh the mix: Add the Hungry Jack Buttermilk Complete mix (120 g) to a medium bowl.
-
 2. Weigh the water: Measure the water (162 g). This is 35% more water than the mix by weight (120 g × 1.35 = 162 g).
+3. Mix gently: Pour in the water (162 g) and stir 10–15 seconds—just until the big dry pockets are gone. The batter should be a little lumpy (small/medium lumps are fine).
+4. Rest (hands off): Let the batter sit 10 minutes undisturbed so it can hydrate and fluff up. Do not stir again before pouring.
 
 
 
@@ -78,23 +79,15 @@ ingredients:
 
 
 
-1. Mix gently: Pour in the water (162 g) and stir 10–15 seconds—just until the big dry pockets are gone. The batter should be a little lumpy (small/medium lumps are fine).
 
-2. Rest (hands off): Let the batter sit 10 minutes undisturbed so it can hydrate and fluff up. Do not stir again before pouring.
 
-3. Preheat: Heat a nonstick skillet over medium-low to medium (around “40%” on my burner) for 2–3 minutes, until a drop of water sizzles and skates.
-
-4. Oil the pan: Add neutral oil (1–2 tsp | 5–10 g) and swirl to coat; it should shimmer, not smoke.
-
-5. Pour (don’t re-stir): Without stirring, pour batter to make 6-inch pancakes (about 60–80 g batter each, or a scant 1/4 cup).
-
-6. Cook first side: Cook 2–3 minutes undisturbed until the edges look set and not glossy/wet and the bubbles on top hold their shape. Peek underneath—aim for golden-brown.
-
-7. Flip once: Use a wide spatula and flip in one confident motion.
-
-8. Cook second side: Cook 1–2 minutes until the second side is golden-brown and the pancake feels springy in the center (no wet jiggle). Pull it when the bottom color roughly matches the first side.
-
-9. Serve: Move to a plate. Add butter (1/2–1 Tbsp | 7–14 g) if you like. Repeat, adding a touch more oil (1/2–1 tsp | 2–5 g) only if the pan looks dry.
+1. Preheat: Heat a nonstick skillet over medium-low to medium (around “40%” on my burner) for 2–3 minutes, until a drop of water sizzles and skates.
+2. Oil the pan: Add neutral oil (1–2 tsp | 5–10 g) and swirl to coat; it should shimmer, not smoke.
+3. Pour (don’t re-stir): Without stirring, pour batter to make 6-inch pancakes (about 60–80 g batter each, or a scant 1/4 cup).
+4. Cook first side: Cook 2–3 minutes undisturbed until the edges look set and not glossy/wet and the bubbles on top hold their shape. Peek underneath—aim for golden-brown.
+5. Flip once: Use a wide spatula and flip in one confident motion.
+6. Cook second side: Cook 1–2 minutes until the second side is golden-brown and the pancake feels springy in the center (no wet jiggle). Pull it when the bottom color roughly matches the first side.
+7. Serve: Move to a plate. Add butter (1/2–1 Tbsp | 7–14 g) if you like. Repeat, adding a touch more oil (1/2–1 tsp | 2–5 g) only if the pan looks dry.
 
 
 
