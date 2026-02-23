@@ -92,12 +92,7 @@ export function RecipeSpecPanel({ servings, prepMinutes, cookMinutes, totalMinut
     <div className="console-panel mt-5 overflow-hidden">
       <dl className="font-mono-ui grid grid-cols-2 gap-px bg-[var(--color-panel-text)]/10 text-xs uppercase tracking-[0.08em] text-[var(--color-panel-text)]">
         {fields.map((field, index) => (
-          <div
-            key={field.label}
-            className={`bg-[var(--color-panel)] px-3 py-3 transition duration-200 motion-reduce:transition-none ${
-              activeFieldIndex === index ? "spec-box-active" : ""
-            }`}
-          >
+          <div key={field.label} className="bg-[var(--color-panel)] px-3 py-3 transition duration-200 motion-reduce:transition-none">
             <dt className="text-[var(--color-panel-text)]/65">{field.label}</dt>
             <dd className="mt-1 text-sm font-semibold text-[var(--color-accent)]" aria-label={field.value}>
               <span>{displayedValues[index]}</span>
