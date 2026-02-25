@@ -1,6 +1,6 @@
 ---
 
-title: "Pasta e Fagioli (All-White Bean, Tomato-Rich Version)"
+title: "Pasta e Fagioli"
 
 date: 2026-02-24
 
@@ -9,6 +9,8 @@ description: "Hearty, creamy Italian-American comfort soup"
 tags:
 
   - "soup"
+  - "italian"
+  - "beef"
 
 prepMinutes: 20
 
@@ -178,23 +180,17 @@ ingredients:
 
 
 
-1. Dice onion:
-Dice the yellow onion into small pieces (1½ cups / 200 g).
+1. Dice onion: Dice the yellow onion into small pieces (1½ cups / 200 g).
 
-2. Prep carrots and celery:
-Dice the carrots (1 cup / 150 g) and celery (½ cup / 60 g) evenly for consistent cooking.
+2. Prep carrots and celery: Dice the carrots (1 cup / 150 g) and celery (½ cup / 60 g) evenly for consistent cooking.
 
-3. Mince garlic:
-Mince the garlic (1 tablespoon / 9 g).
+3. Mince garlic: Mince the garlic (1 tablespoon / 9 g).
 
-4. Rinse beans:
-Drain and rinse the Great Northern beans (about 3 cups / 480 g drained).
+4. Rinse beans: Drain and rinse the Great Northern beans (about 3 cups / 480 g drained).
 
-5. Measure broth and pasta:
-Measure the chicken broth (4 cups / 950 g) and ditalini pasta (1 cup / 100 g).
+5. Measure broth and pasta: Measure the chicken broth (4 cups / 950 g) and ditalini pasta (1 cup / 100 g).
 
-6. Open tomatoes and sauce:
-Open and measure the diced tomatoes (15 oz / 425 g) and tomato sauce (15 oz / 425 g).
+6. Open tomatoes and sauce: Open and measure the diced tomatoes (15 oz / 425 g) and tomato sauce (15 oz / 425 g).
 
 7. Measure seasonings and grate Parmesan if using.
 
@@ -204,35 +200,17 @@ Open and measure the diced tomatoes (15 oz / 425 g) and tomato sauce (15 oz / 42
 
 
 
-1. Brown the beef:
-Heat a large Dutch oven over medium-high heat. Add the olive oil (1 tablespoon / 14 g) and swirl to coat.
-Add the ground beef (1 lb / 454 g) and cook for 5–7 minutes, breaking it apart, until fully browned with no pink remaining and browned bits forming on the bottom. Drain excess fat if needed, leaving about 1 tablespoon for flavor.
+1. Brown the beef: Heat a large Dutch oven over medium-high heat. Add the olive oil (1 tablespoon / 14 g) and swirl to coat. Add the ground beef (1 lb / 454 g) and cook for 5–7 minutes, breaking it apart, until fully browned with no pink remaining and browned bits forming on the bottom. Drain excess fat if needed, leaving about 1 tablespoon for flavor.
 
-2. Sauté the vegetables:
-Reduce heat to medium. Add the diced yellow onion (1½ cups / 200 g), carrots (1 cup / 150 g), and celery (½ cup / 60 g) to the pot. Cook for 6–8 minutes, stirring occasionally, until the onions are translucent and the carrots begin to soften.
-Add the minced garlic (1 tablespoon / 9 g) and cook for 30–45 seconds, stirring constantly, until fragrant but not browned.
+2. Sauté the vegetables: Reduce heat to medium. Add the diced yellow onion (1½ cups / 200 g), carrots (1 cup / 150 g), and celery (½ cup / 60 g) to the pot. Cook for 6–8 minutes, stirring occasionally, until the onions are translucent and the carrots begin to soften. Add the minced garlic (1 tablespoon / 9 g) and cook for 30–45 seconds, stirring constantly, until fragrant but not browned.
 
-3. Build the tomato base:
-Stir in the Italian seasoning (1 tablespoon / 6 g), salt (1 teaspoon / 6 g), and black pepper (½ teaspoon / 1 g). Cook for 30 seconds to bloom the spices.
-Add the diced tomatoes (1 can / 15 oz / 425 g) and tomato sauce (1 can / 15 oz / 425 g). Stir well, scraping the bottom to release browned bits. Simmer for 3–5 minutes, until slightly thickened and richly aromatic.
+3. Build the tomato base: Stir in the Italian seasoning (1 tablespoon / 6 g), salt (1 teaspoon / 6 g), and black pepper (½ teaspoon / 1 g). Cook for 30 seconds to bloom the spices.  Add the diced tomatoes (1 can / 15 oz / 425 g) and tomato sauce (1 can / 15 oz / 425 g). Stir well, scraping the bottom to release browned bits. Simmer for 3–5 minutes, until slightly thickened and richly aromatic.
 
-4. Add beans and broth:
-Stir in the Great Northern beans (2 cans / about 3 cups / 480 g drained) and chicken broth (4 cups / 32 oz / 950 g).
-Bring to a gentle boil, then reduce to a steady simmer. Simmer uncovered for 15 minutes, until the broth slightly thickens and the flavors meld. The soup should look cohesive and lightly creamy from the beans.
+4. Add beans and broth: Stir in the Great Northern beans (2 cans / about 3 cups / 480 g drained) and chicken broth (4 cups / 32 oz / 950 g). Bring to a gentle boil, then reduce to a steady simmer. Simmer uncovered for 15 minutes, until the broth slightly thickens and the flavors meld. The soup should look cohesive and lightly creamy from the beans.
 
-5. Add the pasta:
-Stir in the ditalini pasta (1 cup / 3½ oz / 100 g). Simmer for 8–10 minutes, stirring occasionally, until the pasta is tender but still slightly firm (al dente).
-If the soup thickens too much, add ¼–½ cup hot water or broth and stir until loosened to a spoonable consistency.
+5. Add the pasta: Stir in the ditalini pasta (1 cup / 3½ oz / 100 g). Simmer for 8–10 minutes, stirring occasionally, until the pasta is tender but still slightly firm (al dente). If the soup thickens too much, add ¼–½ cup hot water or broth and stir until loosened to a spoonable consistency.
 
-6. Taste and finish:
-Taste and adjust with additional salt or pepper as needed.
-Turn off the heat.
-Serve hot topped with grated Parmesan (½ cup / 45 g divided among servings). The finished soup should be hearty, thick, and comforting but still fluid enough to ladle easily.
-
-
-
-
-
+6. Taste and finish: Taste and adjust with additional salt or pepper as needed. Turn off the heat. Serve hot topped with grated Parmesan (½ cup / 45 g divided among servings). The finished soup should be hearty, thick, and comforting but still fluid enough to ladle easily.
 
 
 Notes:
