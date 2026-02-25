@@ -22,13 +22,13 @@ servings: 12
 
 ingredients:
 
-  - name: "Yellow onion"
+  - name: "Large Yellow Onion"
 
     amount:
 
       value: 1
 
-      unit: "large (1½ cups diced)"
+      unit: "1½ cups diced"
 
     grams: 200
 
@@ -206,7 +206,7 @@ ingredients:
 
 3. Build the tomato base: Stir in the Italian seasoning (1 tablespoon / 6 g), salt (1 teaspoon / 6 g), and black pepper (½ teaspoon / 1 g). Cook for 30 seconds to bloom the spices.  Add the diced tomatoes (1 can / 15 oz / 425 g) and tomato sauce (1 can / 15 oz / 425 g). Stir well, scraping the bottom to release browned bits. Simmer for 3–5 minutes, until slightly thickened and richly aromatic.
 
-4. Add beans and broth: Stir in the Great Northern beans (2 cans / about 3 cups / 480 g drained) and chicken broth (4 cups / 32 oz / 950 g). Bring to a gentle boil, then reduce to a steady simmer. Simmer uncovered for 15 minutes, until the broth slightly thickens and the flavors meld. The soup should look cohesive and lightly creamy from the beans.
+4. Add beans and broth: Stir in the Great Northern beans (2 cans / 480 g drained) and chicken broth (4 cups / 32 oz / 950 g). Bring to a gentle boil, then reduce to a steady simmer. Simmer uncovered for 15 minutes, until the broth slightly thickens and the flavors meld. The soup should look cohesive and lightly creamy from the beans.
 
 5. Add the pasta: Stir in the ditalini pasta (1 cup / 3½ oz / 100 g). Simmer for 8–10 minutes, stirring occasionally, until the pasta is tender but still slightly firm (al dente). If the soup thickens too much, add ¼–½ cup hot water or broth and stir until loosened to a spoonable consistency.
 
