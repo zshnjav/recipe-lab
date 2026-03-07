@@ -120,17 +120,13 @@ ingredients:
 
 
 
-1. Cook and cool pasta  
-Bring a large pot of water to a boil and season generously with salt. Add pasta and cook until slightly past al dente. Drain and rinse under cold water until fully cooled and no longer steamy. Allow to drain well.
+1. Cook and cool pasta: Bring a large pot of water to a boil and season generously with salt. Add pasta and cook until slightly past al dente. Drain and rinse under cold water until fully cooled and no longer steamy. Allow to drain well.
 
-2. Prepare chicken  
-Dice or shred cooked chicken into bite-size pieces.
+2. Prepare chicken: Dice or shred cooked chicken into bite-size pieces.
 
-3. Slice lettuce  
-Thinly slice romaine lettuce into strips and discard tough base.
+3. Slice lettuce: Thinly slice romaine lettuce into strips and discard tough base.
 
-4. Measure ingredients  
-Measure parmesan, shaved parmesan, croutons, and dressing.
+4. Measure ingredients: Measure parmesan, shaved parmesan, croutons, and dressing.
 
 
 
