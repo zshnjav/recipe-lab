@@ -30,7 +30,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${body.variable} ${mono.variable} antialiased`}>
-        <header className="border-b border-[var(--color-border)] bg-[var(--color-bg)]/95 backdrop-blur">
+        <header className="sticky top-0 z-50 border-b border-[var(--color-border)] bg-[var(--color-bg)]/95 backdrop-blur">
           <div className="mx-auto flex w-full max-w-6xl items-center justify-between px-4 py-4 md:px-8">
             <Link href="/" className="text-2xl font-semibold tracking-tight text-[var(--color-fg)]">
               Recipe Lab

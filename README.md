@@ -6,12 +6,11 @@ The site is static-first and markdown-driven: recipes live in `content/recipes/*
 
 ## Beginner Notes
 
-- You do not need to know React deeply to add recipes. Most of your work is just editing markdown files.
-- Think of `content/recipes` as your "database". Every `.md` file there becomes a real recipe page.
-- `frontmatter` means the YAML block between `---` lines at the top of each recipe.
-- If the site does not load, run `npm run lint` first to catch formatting/schema mistakes quickly.
+- You do not need to know React deeply to add recipes. Most of your work is editing markdown files.
+- Think of `content/recipes` as your recipe database. Every `.md` file becomes a real recipe page.
+- `frontmatter` means the YAML block between `---` lines at the top of each recipe file.
 - Keep slug filenames simple and lowercase (example: `beef-fried-rice.md`).
-- When in doubt, copy `content/templates/recipe-template.md` and only replace values.
+- When in doubt, copy `content/templates/recipe-template.md` and replace values.
 
 ## Stack
 
@@ -20,29 +19,42 @@ The site is static-first and markdown-driven: recipes live in `content/recipes/*
 - Tailwind CSS
 - Deployed on Vercel via GitHub
 
+## Routes
+
+- `/` Home overview with quick discovery and search.
+- `/recipes` Main browse/search/filter/sort page.
+- `/recipes/[slug]` Recipe detail page.
+- `/about` About page.
+- `/tags` Redirects to `/recipes`.
+- `/tags/[tag]` Legacy tag route that redirects to `/recipes?tags=<tag>`.
+
 ## Current Features
 
-- Home page with:
-  - search across title, tags, and ingredients
-  - random recipe button
-  - 6 random tag pills + `Browse by tags`
-  - recent recipe cards
-- `/recipes` archive page with search + tag filters
-- `/recipes/[slug]` detail page with:
-  - structured ingredients panel
-  - servings scaler
-  - shopping list copy
-  - method sections (`Prep (Mise-en-Place)` + `Execution`)
-  - related recipes
-- `/tags` index page
-- `/tags/[tag]` filtered tag page
+- Home page:
+  - Search across title, description, tags, and ingredients
+  - Random recipe button
+  - Recent recipe cards (latest recipes)
+  - "View full recipe archive" link to `/recipes`
+- Browse page (`/recipes`):
+  - Search input
+  - Multi-tag filtering through URL params (`tags=a,b,c`)
+  - Co-occurring tag discovery panel
+  - Sort options: newest first or lowest total time
+  - Random recipe button
+  - Result summary and clear-all controls
+- Recipe detail page (`/recipes/[slug]`):
+  - Specs panel (servings, prep, cook, total)
+  - Ingredients panel with servings scaler
+  - Copy shopping list
+  - Copy full recipe
+  - Method rendering with `Prep` and `Execution` sections
+  - Step focus mode with optional "Keep Screen Awake"
+  - Recipe image rendering from markdown image lines
 - Automatic `quick` tag when `totalMinutes <= 30`
 
 ## Recipe Content Model
 
-Each recipe file uses frontmatter + markdown body.
-
-Frontmatter = metadata used by the app for cards, tags, filtering, and timings.
+Each recipe file uses frontmatter plus markdown body.
 
 Required frontmatter fields:
 
@@ -73,11 +85,12 @@ ingredients:
 
 Notes:
 
-- Each ingredient needs at least one measurement (`amount` or `grams`).
+- Each object-style ingredient must include at least one measurement: `amount` or `grams`.
 - If both are provided, both are shown and scaled.
-- Common units scale using kitchen-style fractions.
+- Common units are displayed with kitchen-style fraction formatting after scaling.
 - Grams scale and display as whole numbers.
-- `quick` is added automatically if `totalMinutes` is 30 or less.
+- Legacy string ingredients are still parsed for backward compatibility.
+- `quick` is auto-added when `totalMinutes <= 30`.
 
 ## Method Body Format
 
@@ -91,21 +104,19 @@ Use this structure in the markdown body:
 1. ...
 ```
 
-Legacy method markdown still renders, but new recipes should follow this structure.
+Legacy markdown still renders as a fallback, but new recipes should follow this structure.
 
-Plain-English meaning:
+## Adding a New Recipe
 
-- `Prep (Mise-en-Place)` = all setup work before heat (chopping, mixing, measuring).
-- `Execution` = actual cooking steps.
+1. Copy `content/templates/recipe-template.md`.
+2. Fill frontmatter and method sections.
+3. Save as `content/recipes/<slug>.md`.
+4. Run checks:
+   - `npm run lint`
+   - `npx tsc --noEmit`
+5. Run `npm run dev` and verify at `/recipes/<slug>`.
 
-## Adding a New Recipe (Low-Friction Workflow)
-
-1. Copy `content/templates/recipe-template.md`
-2. Fill in frontmatter and method sections
-3. Save as `content/recipes/<slug>.md`
-4. Run `npm run dev` and verify at `/recipes/<slug>`
-
-Detailed authoring instructions:
+Detailed authoring guide:
 
 - `content/templates/README.md`
 
@@ -121,10 +132,10 @@ Reference in markdown:
 ![Alt text](/recipes/<slug>/step-1.jpg)
 ```
 
-Beginner tip:
+Tip:
 
-- The file path in markdown must match the real file path exactly.
-- Good pattern: folder name and markdown slug should be identical.
+- The markdown path must match the real file path exactly.
+- Keep the image folder slug aligned with the markdown filename slug.
 
 ## Scripts
 
@@ -133,14 +144,8 @@ npm run dev
 npm run build
 npm run start
 npm run lint
+npx tsc --noEmit
 ```
-
-What these do:
-
-- `npm run dev`: starts local development server (usually `http://localhost:3000`).
-- `npm run build`: checks production build.
-- `npm run start`: runs production build locally after building.
-- `npm run lint`: catches code/style issues early.
 
 ## Project Structure
 

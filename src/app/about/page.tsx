@@ -21,37 +21,23 @@ export default function AboutPage() {
             </h2>
             <div className="mt-2 space-y-4 text-sm leading-7 text-[var(--color-fg)]">
               <p>
-                I created this site because I build my recipes in a very specific kind of way, and it might be helpful
-                to someone else like me.
+                Whenever I found a recipe I wanted to make, I usually ended up rewriting it.
               </p>
               <p>
-                Anytime I wanted to make something, or found a recipe that interested me, I would start this workflow I
-                didn&apos;t even realize I had created. I would tweak the recipe to fit my needs, pull in different parts
-                from different versions, and then rewrite it into a format that worked for me.
+                I&apos;d tweak it, combine ideas from different versions, and turn it into a format that was easier for
+                me to actually cook from.
               </p>
               <p>
-                Over time, that format became consistent. It included things like being able to quickly extract
-                ingredients and add them to my grocery list.
+                Over time, that format became consistent: ingredients that are easy to pull into a grocery list, clear
+                prep before cooking starts, measurements in both kitchen units and grams, and ingredient amounts
+                written exactly when they&apos;re used.
               </p>
               <p>
-                Clear prep instructions before any cooking started, so I could focus once I began instead of going back
-                and forth.
+                Eventually I realized this was the format I actually wanted to keep.
               </p>
               <p>
-                Measurements in both common kitchen units and grams, because I prefer to measure on a scale while I
-                prep.
-              </p>
-              <p>
-                And having the amount of each ingredient written at the exact moment it gets used, so I wouldn&apos;t have
-                to keep checking back.
-              </p>
-              <p>
-                Eventually I realized I should keep these recipes once they were in the format I actually use to follow
-                through and produce them.
-              </p>
-              <p>
-                So I built the site for me, and hopefully for other people like me. People who are good at following
-                instructions and are holding out hope that maybe one day they can be good home cooks too.
+                So I built Recipe Lab for myself, and hopefully for other people like me who want recipes to feel
+                clear, practical, and easy to follow.
               </p>
             </div>
           </section>
